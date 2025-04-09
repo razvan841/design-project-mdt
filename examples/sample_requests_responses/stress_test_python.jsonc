@@ -14,8 +14,8 @@
                 "language": "python",
                 "version": "3.12",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [
+                ],
                 "run_as_is": true
             },
             {
@@ -29,8 +29,7 @@
                 "language": "python",
                 "version": "3.11",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": false
             },
             {
@@ -44,8 +43,7 @@
                 "language": "python",
                 "version": "3.10",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": true
             },
             {
@@ -59,8 +57,7 @@
                 "language": "python",
                 "version": "3.9",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": true
             },
             {
@@ -74,8 +71,7 @@
                 "language": "python",
                 "version": "3.8",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": false
             },
             {
@@ -89,8 +85,7 @@
                 "language": "python",
                 "version": "3.9",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": false
             },
             {
@@ -104,8 +99,7 @@
                 "language": "python",
                 "version": "3.9",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": true
             },
             {
@@ -119,8 +113,7 @@
                 "language": "python",
                 "version": "3.9",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": false
             },
             {
@@ -134,8 +127,7 @@
                 "language": "python",
                 "version": "3.9",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": false
             },
             {
@@ -149,8 +141,7 @@
                 "language": "python",
                 "version": "3.4",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": false
             }
 

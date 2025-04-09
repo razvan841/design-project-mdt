@@ -111,16 +111,15 @@ class PHPLanguage(Language):
         def __init__(self):
             super().__init__()
 
-        def add_base_image(self, version, compiler):
+        def add_base_image(self, version : str, compiler : str):
             if version == "":
                 logger.warning("PHP add_base_image: Didn't match any version, using php:8.3!")
                 return f"FROM php:8.3-alpine\n\n"
             return f"FROM {version}-cli-alpine\n\n"
 
-        def add_libraries(self, version, compiler, specs):
-            libraries = specs.get("libraries", []) if isinstance(specs, dict) else []
-            if libraries:
-                return "RUN composer require " + " ".join(libraries) + "\n\n"
+        def add_libraries(self, version : str, compiler : str, specs : list):
+            if specs:
+                return "RUN composer require " + " ".join(specs) + "\n\n"
             return ""
 
     def __init__(self):

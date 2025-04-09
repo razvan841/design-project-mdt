@@ -151,10 +151,9 @@ class CppLanguage(Language):
                     return f"FROM gcc:latest\n\n"
             return ""
 
-        def add_libraries(self, version: str, compiler: str, specs: dict) -> str:
-            libraries = specs.get("libraries", []) if isinstance(specs, dict) else []
-            if libraries:
-                return "RUN apt-get update && apt-get install -y " + " ".join(libraries) + "\n\n"
+        def add_libraries(self, version: str, compiler: str, specs: list) -> str:
+            if specs:
+                return "RUN apt-get update && apt-get install -y " + " ".join(specs) + "\n\n"
             return ""
 
         def add_time(self, version: str, compiler: str) -> str:

@@ -30,7 +30,7 @@ class DockerMaker:
         self.COPY_ALL = "COPY . /usr/src/app\n\n"
         self.SLEEP_COMMAND = 'CMD ["sleep", "365000d"]\n'
 
-    def generate_dockerfile(self, version: str, compiler: str, function_name: str, specs: dict, index: int) -> None:
+    def generate_dockerfile(self, version: str, compiler: str, function_name: str, specs: list, index: int) -> None:
         '''
         function that generates the dockerfile, based on the requirements of the code cell
         this class is overridden in every specific language class
@@ -69,7 +69,7 @@ class DockerMaker:
     def add_base_image(self, version: str, compiler: str) -> str:
         return ""
 
-    def add_libraries(self, version: str, compiler: str, specs: dict) -> str:
+    def add_libraries(self, version: str, compiler: str, specs: list) -> str:
         return ""
 
     def add_time(self, version: str, compiler: str) -> str:

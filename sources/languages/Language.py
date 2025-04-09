@@ -43,7 +43,7 @@ class Language:
     def inject(self, source_path: str, destination_path: str, signature: dict) -> None:
         self.injector.inject(source_path, destination_path, signature)
 
-    def generate_dockerfile(self, version: str, compiler: str, function_name: str, specs: dict, index: int) -> None:
+    def generate_dockerfile(self, version: str, compiler: str, function_name: str, specs: list, index: int) -> None:
         self.docker_maker.generate_dockerfile(version, compiler, function_name, specs, index)
 
     def get_available_versions(self) -> list:

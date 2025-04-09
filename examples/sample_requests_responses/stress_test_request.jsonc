@@ -14,8 +14,7 @@
                 "language": "Python",
                 "version": "3.11",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": false
             },
             {
@@ -29,8 +28,7 @@
                 "language": "Python",
                 "version": "3.10",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": false
             },
             {
@@ -41,8 +39,7 @@
                 "language": "python",
                 "version": "3.9",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": true
             },
             {
@@ -53,8 +50,7 @@
                 "language": "python",
                 "version": "3.8",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": true
             },
             {
@@ -71,8 +67,7 @@
                 "language": "cpp",
                 "version": "",
                 "compiler":"gcc",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": false
             },
             {
@@ -89,8 +84,7 @@
                 "language": "cpp",
                 "version": "",
                 "compiler":"gcc",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": false
             },
             {
@@ -107,8 +101,7 @@
                 "language": "cpp",
                 "version": "",
                 "compiler":"clang",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": false
             },
             {
@@ -119,8 +112,7 @@
                 "language": "cpp",
                 "version": "",
                 "compiler":"gcc",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": true
             },
             {
@@ -131,8 +123,7 @@
                 "language": "cpp",
                 "version": "",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": true
             },
             {
@@ -149,8 +140,7 @@
                 "language": "php",
                 "version": "php:8.3",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": false
             },
             {
@@ -167,8 +157,7 @@
                 "language": "php",
                 "version": "php:5.6",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": false
             },
             {
@@ -179,8 +168,7 @@
                 "language": "php",
                 "version": "php:7.4",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": true
             },
             {
@@ -191,8 +179,7 @@
                 "language": "php",
                 "version": "php:7.4",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": true
             },
             {
@@ -209,8 +196,7 @@
                 "language": "js",
                 "version": "node:19",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": false
             },
             {
@@ -227,8 +213,7 @@
                 "language": "js",
                 "version": "node:16",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": false
             },
             {
@@ -239,8 +224,7 @@
                 "language": "js",
                 "version": "node:14",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": true
             },
             {
@@ -251,8 +235,7 @@
                 "language": "js",
                 "version": "node:12",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [],
                 "run_as_is": true
             }
 

@@ -73,16 +73,15 @@ class JSLanguage(Language):
         def __init__(self):
             super().__init__()
 
-        def add_base_image(self, version, compiler):
+        def add_base_image(self, version: str, compiler : str):
             if version == "":
                 logger.warning("JS add_base_image: Didn't match any version, using node:19!")
                 return f"FROM node:19-alpine\n\n"
             return f"FROM {version}-alpine\n\n"
 
-        def add_libraries(self, version, compiler, specs):
-            libraries = specs.get("libraries", []) if isinstance(specs, dict) else []
-            if libraries:
-                return "RUN npm install " + " ".join(libraries) + "\n\n"
+        def add_libraries(self, version : str, compiler : str, specs : list):
+            if specs:
+                return "RUN npm install " + " ".join(specs) + "\n\n"
             return ""
 
     def __init__(self):

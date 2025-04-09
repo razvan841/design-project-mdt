@@ -14,8 +14,8 @@
                 "language": "cpp",
                 "version": "",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [
+                ],
                 "run_as_is": false
             }
         ],

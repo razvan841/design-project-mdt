@@ -14,8 +14,9 @@
                 "language": "Python",
                 "version": "3.11.1",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [
+
+                ],
                 "run_as_is": false
             },
             {
@@ -29,8 +30,8 @@
                 "language": "cpp",
                 "version": "",
                 "compiler":"",
-                "specs": {
-                },
+                "specs": [
+                ],
                 "run_as_is": false
             }
 

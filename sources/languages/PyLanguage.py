@@ -64,16 +64,15 @@ class PyLanguage(Language):
         def __init__(self):
             super().__init__()
 
-        def add_base_image(self, version, compiler):
+        def add_base_image(self, version : str, compiler : str):
             if version == "":
                 logger.warning("Python add_base_image: Didn't match any version, using 3.10!")
                 return f"FROM python:3.10-alpine\n\n"
             return f"FROM python:{version}-alpine\n\n"
 
-        def add_libraries(self, version, compiler, specs):
-            libraries = specs.get("libraries", []) if isinstance(specs, dict) else []
-            if libraries:
-                return "RUN pip install " + " ".join(libraries) + "\n\n"
+        def add_libraries(self, version : str, compiler : str, specs : list):
+            if specs:
+                return "RUN pip install " + " ".join(specs) + "\n\n"
             return ""
 
     def __init__(self):

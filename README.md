@@ -58,7 +58,7 @@ For fronted development, Node.js 22.14 was used.
 For React requirements and dependencies, run the commands:
 
 ```sh
-cd app
+cd frontend
 npm install
 ```
 
@@ -75,7 +75,7 @@ python Server.py
 For the frontend, run the commands:
 
 ```sh
-cd app
+cd frontend
 npm start
 ```
 
@@ -120,7 +120,7 @@ We used Electron to package the application as a desktop app. All the required s
 
 ```sh
 npm install electron electron-packager
-cd app
+cd frontend
 npm run build
 cd ..
 npx electron-packager . <AppName> --platform=win32 --arch=x64 --out=dist/ --overwrite
@@ -132,11 +132,13 @@ If you want to create a new installer, use the following commands:
 
 ```sh
 npm install electron electron-builder
-cd app
+cd frontend
 npm run build
 cd ..
-
+npm run dist:<TargetSystem>
 ```
+
+Replace with the target system you want to make the installer for. If you don't specify, it will make it for your system. You can all set it for all. You can't make an installer for Mac unless you are on a Mac machine.
 
 # Project Structure
 
@@ -155,7 +157,7 @@ The project is organized into several key directories and files, each serving a 
 - **`sources/`**
   Contains all backend logic. Inside this folder is a `languages/` subdirectory that includes implementations for all supported programming languages.
 
-- **`app/`**
+- **`frontend/`**
   Includes the frontend code along with all required dependencies and resources.
 
 - **`tests/`**
@@ -187,7 +189,6 @@ Below is a table that outlines the different classes and interfaces used in the 
 | **DockerMaker**      | Outlines how a new Docker maker should be implemented for a specific language, guiding the creation of custom Docker images.                                   |
 | **LoggerConfig**     | Configures how logging appears throughout the system, ensuring proper logging setup for error tracking and debugging.                                          |
 | **TestCasesGenerator**| Responsible for generating test cases based on the function signature, automating test creation for code validation.                                          |
-
 
 # Logging
 

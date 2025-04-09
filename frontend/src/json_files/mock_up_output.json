@@ -1,0 +1,12 @@
+{
+"defaultMetrics": {
+    "memoryUsage": "128MB",
+    "executionTime": "2.5"
+},
+"pluginMetrics": {
+"CPU Usage": "15%",
+"GPU Usage": "5%"
+},
+"value": "3",
+"error_msg": ""
+}

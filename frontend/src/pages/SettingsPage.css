@@ -1,0 +1,257 @@
+.big-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+.tab-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    overflow-x: hidden;
+}
+
+.tab-menu {
+    padding-left: 10px;
+    padding-top: 10px;
+    display: flex;
+    gap: 10px;
+    background-color: #181818;
+    padding-left: 20px;
+}
+
+.tab-menu button {
+    padding: 10px;
+    background: #1E1E1E;
+    color: #d9d9d9;
+    border: 0;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 300;
+    box-shadow: none;
+    border-radius: 0%;
+}
+
+.tab-menu button.active {
+    padding: 10px;
+    background-color: #1e1e1e;
+    border-bottom-width: 1px;
+    /* border-bottom: white; */
+    border-style: solid;
+}
+
+.tab-menu button:hover {
+    color: white;
+}
+
+.settingsContainer {
+    flex: 1;
+    flex-direction: column;
+    padding: 20px;
+    color: #d9d9d9;
+    font-family: Roboto;
+    align-items: center;
+
+    overflow-x: hidden;
+}
+
+.outputContainer {
+    flex: 1;
+    position: relative;
+    flex-direction: column;
+}
+
+.tab-content-overlay {
+    display: flex;
+    flex-grow: 1;
+    flex-wrap: nowrap;
+
+    overflow-x: auto;
+}
+
+.settings-title {
+    color: #d9d9d9;
+}
+
+.full-width-line {
+    width: 100%;
+    height: 0.1vh;
+    background-color: #d9d9d9;
+    margin-bottom: 10px;
+}
+
+.cell-subtitle {
+    font-weight: 500;
+    font-size: 18px;
+    margin-bottom: 1vh;
+    margin-top: 1vh;
+}
+
+.cell-signature-container {
+    display: flex;
+    flex-direction: column;
+
+    margin: 0 1vw 0 1vw;
+    padding: 2%;
+
+    background: linear-gradient(135deg, rgba(245, 245, 245, 0.1) 0%, rgba(245, 245, 245, 0.4) 100%);
+    border-radius: 10px;
+}
+
+.cell-signature-container:first-of-type {
+    margin-left: 0;
+}
+
+.checkbox-setting-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+}
+
+.SettingsFieldsTesting {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.SettingsFields {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    max-width: 100%;
+    overflow-x: scroll;
+}
+
+.functionSignatureContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.settings-container-row {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.settings-container-col {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.inputFields {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 5px;
+}
+
+.inputField {
+    font-family: Roboto;
+    font-size: 14px;
+    color: #d9d9d9;
+    display: flex;
+    gap: 10px;
+
+    justify-content: space-between;
+}
+
+.inputField span {
+    white-space: nowrap;
+    align-self: center;
+    min-width: 50px;
+}
+
+.inputField input,
+textarea {
+    background-color: #333333;
+    padding: 5px;
+    border: 0;
+    border-radius: 5px;
+    max-width: fit-content;
+    color: #d9d9d9;
+    font-family: Roboto;
+    font-size: 14px;
+    outline: none;
+    box-shadow: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.inputField textarea {
+    resize: none;
+}
+
+.inputField input:hover {
+    background-color: #444444;
+}
+
+.testing {
+    max-width: 30vw;
+}
+
+.inputField.timeout input {
+    max-width: 50px;
+}
+
+.type {
+    width: 80px;
+}
+
+.category-container {
+    margin-bottom: 5vh;
+    min-height: 30vh;
+}
+
+.settingsButton {
+    margin-top: 50px;
+    border-color: #1E1E1E;
+}
+
+.bottomButtons {
+    display: flex;
+    gap: 1vw;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.testing-content {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5vw;
+}
+
+.test-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 1vw 0 1vw;
+    padding: 2%;
+    background: linear-gradient(135deg, rgba(245, 245, 245, 0.1) 0%, rgba(245, 245, 245, 0.4) 100%);
+    border-radius: 10px;
+}
+
+.test-container:first-of-type { 
+    margin-left: 0;
+}
+
+.test-container.isUnavailable {
+    pointer-events: none;
+    filter: brightness(0.6) blur(0.5px)
+}
+
+.test-container-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1vh;
+}

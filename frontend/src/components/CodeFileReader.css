@@ -1,0 +1,12 @@
+input[type="file"] {
+    display: none;
+}
+
+.fileUploadButton{
+    height: fit-content;
+    width: fit-content;
+    display: flex
+;
+    align-self: flex-end;
+    padding: 1.5%;
+}

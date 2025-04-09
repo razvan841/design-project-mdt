@@ -1,0 +1,206 @@
+{
+    "0": {
+        "outputs": {
+            "0": {
+                "defaultMetrics": {
+                    "memoryUsage": "30544 KB",
+                    "executionTime": "0m 0.02s"
+                },
+                "pluginMetrics": {
+                    "CPU Usage": "100%",
+                    "GPU Usage": "- %"
+                },
+                "value": "3",
+                "error_msg": ""
+            },
+            "1": {
+                "defaultMetrics": {
+                    "memoryUsage": "30672 KB",
+                    "executionTime": "0m 0.04s"
+                },
+                "pluginMetrics": {
+                    "CPU Usage": "81%",
+                    "GPU Usage": "- %"
+                },
+                "value": "10",
+                "error_msg": ""
+            },
+            "2": {
+                "defaultMetrics": {
+                    "memoryUsage": "30784 KB",
+                    "executionTime": "0m 0.01s"
+                },
+                "pluginMetrics": {
+                    "CPU Usage": "100%",
+                    "GPU Usage": "- %"
+                },
+                "value": "14",
+                "error_msg": ""
+            }
+        },
+        "average_memory_usage": "30666.67 KB",
+        "average_cpu_usage": "93.67 %",
+        "average_time": "0:00:00.023333",
+        "total_run_time": "0:00:00.070000"
+    },
+    "1": {
+        "outputs": {
+            "0": {
+                "defaultMetrics": {
+                    "memoryUsage": "3772 KB",
+                    "executionTime": "0:00.00"
+                },
+                "pluginMetrics": {
+                    "CPU Usage": "100%",
+                    "GPU Usage": "- %"
+                },
+                "value": "1",
+                "error_msg": ""
+            },
+            "1": {
+                "defaultMetrics": {
+                    "memoryUsage": "3668 KB",
+                    "executionTime": "0:00.00"
+                },
+                "pluginMetrics": {
+                    "CPU Usage": "100%",
+                    "GPU Usage": "- %"
+                },
+                "value": "3125",
+                "error_msg": ""
+            },
+            "2": {
+                "defaultMetrics": {
+                    "memoryUsage": "3724 KB",
+                    "executionTime": "0:00.00"
+                },
+                "pluginMetrics": {
+                    "CPU Usage": "100%",
+                    "GPU Usage": "- %"
+                },
+                "value": "1331",
+                "error_msg": ""
+            }
+        },
+        "average_memory_usage": "3721.33 KB",
+        "average_cpu_usage": "100.0 %",
+        "average_time": "0:00:00",
+        "total_run_time": "0:00:00"
+    },
+    "expected_output": {
+        "outputs": {
+            "0": {
+                "defaultMetrics": {
+                    "memoryUsage": "0 KB",
+                    "executionTime": "0:00.00"
+                },
+                "pluginMetrics": {
+                    "CPU Usage": "0%",
+                    "GPU Usage": "- %"
+                },
+                "value": "3",
+                "error_msg": ""
+            },
+            "1": {
+                "defaultMetrics": {
+                    "memoryUsage": "0 KB",
+                    "executionTime": "0:00.00"
+                },
+                "pluginMetrics": {
+                    "CPU Usage": "0%",
+                    "GPU Usage": "- %"
+                },
+                "value": "10",
+                "error_msg": ""
+            },
+            "2": {
+                "defaultMetrics": {
+                    "memoryUsage": "0 KB",
+                    "executionTime": "0:00.00"
+                },
+                "pluginMetrics": {
+                    "CPU Usage": "0%",
+                    "GPU Usage": "- %"
+                },
+                "value": "14",
+                "error_msg": ""
+            }
+        },
+        "average_memory_usage": "0.0 KB",
+        "average_cpu_usage": "0.0 %",
+        "average_time": "0:00:00",
+        "total_run_time": "0:00:00"
+    },
+    "differential": {
+        "test_count": "3",
+        "matched": "0",
+        "no_match": "3",
+        "failed": [
+            {
+                "test_id": "0",
+                "input": [
+                    "1",
+                    "2"
+                ],
+                "cells": {
+                    "0": {
+                        "value": "3",
+                        "error_msg": ""
+                    },
+                    "1": {
+                        "value": "1",
+                        "error_msg": ""
+                    },
+                    "expected_output": {
+                        "value": "3",
+                        "error_msg": ""
+                    }
+                }
+            },
+            {
+                "test_id": "1",
+                "input": [
+                    "5",
+                    "5"
+                ],
+                "cells": {
+                    "0": {
+                        "value": "10",
+                        "error_msg": ""
+                    },
+                    "1": {
+                        "value": "3125",
+                        "error_msg": ""
+                    },
+                    "expected_output": {
+                        "value": "10",
+                        "error_msg": ""
+                    }
+                }
+            },
+            {
+                "test_id": "2",
+                "input": [
+                    "11",
+                    "3"
+                ],
+                "cells": {
+                    "0": {
+                        "value": "14",
+                        "error_msg": ""
+                    },
+                    "1": {
+                        "value": "1331",
+                        "error_msg": ""
+                    },
+                    "expected_output": {
+                        "value": "14",
+                        "error_msg": ""
+                    }
+                }
+            }
+        ]
+    }
+}
+
+// output of running the example_request file

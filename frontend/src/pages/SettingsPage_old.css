@@ -1,0 +1,111 @@
+.mainSPContainer {
+    background: #1e1e1e;
+
+    display: flex;
+
+    height: 100vh;
+    width: 100%;
+
+    margin: 0;
+}
+
+.settingsContainer {
+    flex: 1;
+    flex-direction: column;
+}
+
+.outputContainer {
+    flex: 1;
+    position: relative;
+    flex-direction: column;
+}
+
+.contentContainer {
+    display: flex;
+    flex-grow: 1;
+    flex-wrap: nowrap;
+}
+
+.settingsTitle {
+    font-family: Roboto;
+    font-size: 20px;
+    color: #d9d9d9;
+
+    padding: 1%;
+}
+
+.settingsSubTitle {
+    font-family: Roboto;
+    font-size: 16px;
+    color: #d9d9d9;
+
+    padding: 1%;
+}
+
+.input {
+    display: flex;
+    align-items: center;
+}
+
+.SettingsFieldsTesting {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.functionSignatureContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.SettingsFields {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputFields {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.inputField {
+    font-family: Roboto;
+    font-size: 14px;
+    color: #d9d9d9;
+
+    padding: 1%;
+}
+
+.metricsContainer {
+
+}
+
+.settingsButton {
+    margin-top: 50px;
+    text-align: center;
+    width: 100px;
+    justify-self: flex-end;
+    padding: 2%;
+
+    background: linear-gradient(135deg, rgba(245, 245, 245, 0.4) 0%, rgba(245, 245, 245, 0.15) 100%);
+    box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+
+    border-radius: 15px;
+    border: 2px solid transparent;
+
+    font-family: Roboto;
+    font-size: 12px;
+    color: #d9d9d9;
+}
+
+.settingsButton:hover {
+    border: 2px solid #AF72E9;
+
+}
+
+.settingsButton:active {
+    background: linear-gradient(135deg, #E972E7 0%, #AF72E9 47.5%, #7472E9 100%);
+}

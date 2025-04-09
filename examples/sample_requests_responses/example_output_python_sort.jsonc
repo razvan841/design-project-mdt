@@ -1,0 +1,54 @@
+{
+    "0": {
+        "outputs": {
+            "0": {
+                "defaultMetrics": {
+                    "memoryUsage": "42384 KB",
+                    "executionTime": "0m 0.12s"
+                },
+                "pluginMetrics": {
+                    "CPU Usage": "75%",
+                    "GPU Usage": "- %"
+                },
+                "value": "[-73, -68, 103, 146]",
+                "error_msg": ""
+            },
+            "1": {
+                "defaultMetrics": {
+                    "memoryUsage": "27520 KB",
+                    "executionTime": "0m 0.02s"
+                },
+                "pluginMetrics": {
+                    "CPU Usage": "92%",
+                    "GPU Usage": "- %"
+                },
+                "value": "[111, 199]",
+                "error_msg": ""
+            },
+            "2": {
+                "defaultMetrics": {
+                    "memoryUsage": "27984 KB",
+                    "executionTime": "0m 0.01s"
+                },
+                "pluginMetrics": {
+                    "CPU Usage": "100%",
+                    "GPU Usage": "- %"
+                },
+                "value": "[-16, 24, 186, 194]",
+                "error_msg": ""
+            }
+        },
+        "average_memory_usage": "32629.33 KB",
+        "average_cpu_usage": "89.0 %",
+        "average_time": "0:00:00.050000",
+        "total_run_time": "0:00:00.150000"
+    },
+    "differential": {
+        "test_count": "3",
+        "matched": "3",
+        "no_match": "0",
+        "failed": []
+    }
+}
+
+// Output of running the example_request_python_sort

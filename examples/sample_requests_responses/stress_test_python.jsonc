@@ -1,0 +1,177 @@
+{
+    "message":
+    {
+        "options":
+        [
+            {
+                "cell_id":0,
+                "code": "def mul(a, b):\n\treturn a + b\n\n\nimport sys,ast\n\ndef main():\n\tx0 = int(sys.argv[1])\n\tx1 = int(sys.argv[2])\n\tresult = mul(x0, x1)\n\tprint(result)\n\nif __name__ == \"__main__\":\n\tmain()",
+                "signature": {
+                    "name": "mul",
+                    "args":["int", "int"],
+                    "return": "int"
+                },
+                "language": "python",
+                "version": "3.12",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": true
+            },
+            {
+                "cell_id":1,
+                "code": "def mul(a, b):\n\treturn a + b",
+                "signature": {
+                    "name": "mul",
+                    "args":["int", "int"],
+                    "return": "int"
+                },
+                "language": "python",
+                "version": "3.11",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": false
+            },
+            {
+                "cell_id":2,
+                "code": "def mul(a, b):\n\treturn a + b",
+                "signature": {
+                    "name": "mul",
+                    "args":["int", "int"],
+                    "return": "int"
+                },
+                "language": "python",
+                "version": "3.10",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": true
+            },
+            {
+                "cell_id":3,
+                "code": "def mul(a, b):\n\tretun a + b",
+                "signature": {
+                    "name": "mul",
+                    "args":["int", "int"],
+                    "return": "int"
+                },
+                "language": "python",
+                "version": "3.9",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": true
+            },
+            {
+                "cell_id":4,
+                "code": "def mul(a, b):\n\treturn a + b",
+                "signature": {
+                    "name": "mul",
+                    "args":["int", "int"],
+                    "return": "int"
+                },
+                "language": "python",
+                "version": "3.8",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": false
+            },
+            {
+                "cell_id":5,
+                "code": "def mul(a, b):\n\tretrn a + b",
+                "signature": {
+                    "name": "mul",
+                    "args":["int", "int"],
+                    "return": "int"
+                },
+                "language": "python",
+                "version": "3.9",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": false
+            },
+            {
+                "cell_id":6,
+                "code": "def mul(a, b):\n\treturn a + b",
+                "signature": {
+                    "name": "mul",
+                    "args":["int", "int"],
+                    "return": "int"
+                },
+                "language": "python",
+                "version": "3.9",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": true
+            },
+            {
+                "cell_id":7,
+                "code": "def mul(a, b):\n\treturn a + b",
+                "signature": {
+                    "name": "mul",
+                    "args":["int", "int"],
+                    "return": "int"
+                },
+                "language": "python",
+                "version": "3.9",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": false
+            },
+            {
+                "cell_id":8,
+                "code": "def mul(a, b):\n\treturn a + b",
+                "signature": {
+                    "name": "mul",
+                    "args":["int", "int"],
+                    "return": "int"
+                },
+                "language": "python",
+                "version": "3.9",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": false
+            },
+            {
+                "cell_id":9,
+                "code": "def mul(a, b):\n\treturn a + b",
+                "signature": {
+                    "name": "mul",
+                    "args":["int", "int"],
+                    "return": "int"
+                },
+                "language": "python",
+                "version": "3.4",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": false
+            }
+
+        ],
+
+        "input": [
+            ["3", "4"],
+            ["2", "5"]
+        ],
+        "output": [
+            ["7"],
+            ["7"]
+        ],
+        "generate_test_cases": true,
+        "test_cases_count": 3,
+        "test_cases_signature": ["int", "int"],
+        "timeout": 60
+    }
+}
+
+
+// Stress test with only python code.
+// Includes cells with broken code, cells with run_as_is = true
+// generate_test_cases = true

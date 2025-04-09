@@ -1,0 +1,133 @@
+# General OS-specific files
+.DS_Store
+Thumbs.db
+
+# Logs and databases
+*.log
+*.sqlite
+*.sqlite3
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+.env
+.venv/
+venv/
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+.idea/
+
+# C/C++
+*.o
+*.obj
+*.so
+*.exe
+*.dll
+
+# Go
+*.exe
+*.test
+*.out
+
+# Rust
+target/
+Cargo.lock
+
+# Ruby and Rails
+*.gem
+log/
+tmp/
+.bundle/
+
+# PHP
+vendor/
+*.log
+
+# Swift and Xcode
+*.xcworkspace
+*.xcuserstate
+DerivedData/
+
+# Android
+*.apk
+*.dex
+*.keystore
+.gradle/
+
+# JetBrains IDEs (IntelliJ, WebStorm, etc.)
+.idea/
+*.iml
+
+# Visual Studio and VS Code
+.vscode/
+*.suo
+*.user
+*.vcxproj*
+*.pdb
+
+# macOS
+*.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Compression files
+*.zip
+*.tar.gz
+*.rar
+
+# Database files
+*.sql
+dump.rdb
+
+# Secrets
+.env
+*.key
+*.pem
+*.crt
+*.pfx
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# Kubernetes
+*.kube/config
+
+# Other
+*.swp
+*.swo
+*.bak
+*.tmp
+
+
+**/execution_logs.json
+projects/
+code_execution/
+
+logs/*
+sessions/*
+sources/user_code/
+dist/

@@ -1,0 +1,57 @@
+.buttonTextContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttonIconContainer {
+    padding: auto;
+    margin: 10px;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: min(50vh, 200px);
+    height: min(50vh, 200px);
+
+    background: linear-gradient(135deg, rgba(245, 245, 245, 0.4) 0%, rgba(245, 245, 245, 0.15) 100%);
+    box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+
+    border-radius: 15px;
+    border: 2px solid transparent;
+
+}
+
+.buttonIcon {
+    width: 60%;
+    height: 60%;
+}
+
+.buttonIconContainer:hover {
+    border: 2px solid #AF72E9;
+}
+
+.buttonIconContainer:active {
+    background: linear-gradient(135deg, #E972E7 0%, #AF72E9 47.5%, #7472E9 100%);
+}
+
+.buttonsContainer a {
+    text-decoration: none;
+  }  
+
+.buttonText {
+    text-decoration: none;
+    margin: 10px;
+    font-size: 18px;
+    color: #e0e0e0;
+    font-family: "Roboto";
+}
+
+
+
+
+

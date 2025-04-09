@@ -1,0 +1,23 @@
+.output-row{
+    display: flex;
+    justify-content: center; /* Centers all boxes in the middle */
+    align-items: center; /* Aligns them vertically */
+    gap: 50px; /* Even spacing between boxes */
+    width: 100%; /* Ensures it takes full width */
+    flex-wrap: wrap; /* Ensures responsiveness (boxes wrap if needed) */
+    margin-bottom: 4vh;
+}
+
+.output-row-first{
+    display: flex;
+    align-items: center; /* Aligns them vertically */
+    gap: 10px; /* Even spacing between boxes */
+    width: 100%; /* Ensures it takes full width */
+    flex-wrap: wrap; /* Ensures responsiveness (boxes wrap if needed) */
+    margin-bottom: 4vh;
+    justify-content: center;
+}
+
+.rows-container{
+    margin-bottom: 100px;
+}

@@ -1,0 +1,72 @@
+{
+    "0": {
+        "outputs": {
+            "0": {
+            "defaultMetrics": {
+                    "memoryUsage": "128MB",
+                    "executionTime": "2.5"
+                },
+            "pluginMetrics": {
+            "CPU Usage": "15%",
+            "GPU Usage": "5%"
+            },
+            "value": "3",
+            "error_msg": ""
+        },
+            "1": {
+            "defaultMetrics": {
+                    "memoryUsage": "300MB",
+                    "executionTime": "2.5"
+                },
+            "pluginMetrics": {
+            "CPU Usage": "15%",
+            "GPU Usage": "5%"
+            },
+            "value": "10",
+            "error_msg": ""
+        },
+        "2": {
+            "defaultMetrics": {
+                    "memoryUsage": "300MB",
+                    "executionTime": "2.5"
+                },
+            "pluginMetrics": {
+            "CPU Usage": "15%",
+            "GPU Usage": "5%"
+            },
+            "value": "10",
+            "error_msg": ""
+        }
+    },
+    "total_run_time": 5
+    },
+    "1": {
+        "outputs": {
+            "0": {
+            "defaultMetrics": {
+                    "memoryUsage": "128MB",
+                    "executionTime": "2.5s"
+                },
+            "pluginMetrics": {
+            "CPU Usage": "15%",
+            "GPU Usage": "5%"
+            },
+            "value": "4",
+            "error_msg": ""
+        },
+            "1": {
+            "defaultMetrics": {
+                    "memoryUsage": "128MB",
+                    "executionTime": "2.5s"
+                },
+            "pluginMetrics": {
+            "CPU Usage": "15%",
+            "GPU Usage": "5%"
+            },
+            "value": "10",
+            "error_msg": ""
+        }
+    },
+    "total_run_time": 7
+    }
+}

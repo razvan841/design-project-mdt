@@ -1,0 +1,107 @@
+{
+    "0": {
+        "outputs": {
+            "0": {
+                "defaultMetrics": {
+                    "memoryUsage": "3848 KB",
+                    "executionTime": "0:00.00"
+                },
+                "pluginMetrics": {
+                    "CPU Usage": "0%",
+                    "GPU Usage": "- %"
+                },
+                "value": "[1, 2, 3]",
+                "error_msg": ""
+            },
+            "1": {
+                "defaultMetrics": {
+                    "memoryUsage": "3780 KB",
+                    "executionTime": "0:00.00"
+                },
+                "pluginMetrics": {
+                    "CPU Usage": "50%",
+                    "GPU Usage": "- %"
+                },
+                "value": "[1, 1, 11, 12, 13, 155, 8765]",
+                "error_msg": ""
+            }
+        },
+        "average_memory_usage": "3814.0 KB",
+        "average_cpu_usage": "25.0 %",
+        "average_time": "0:00:00",
+        "total_run_time": "0:00:00"
+    },
+    "expected_output": {
+        "outputs": {
+            "0": {
+                "defaultMetrics": {
+                    "memoryUsage": "0 KB",
+                    "executionTime": "0:00.00"
+                },
+                "pluginMetrics": {
+                    "CPU Usage": "0%",
+                    "GPU Usage": "- %"
+                },
+                "value": "[1,2,3]",
+                "error_msg": ""
+            },
+            "1": {
+                "defaultMetrics": {
+                    "memoryUsage": "0 KB",
+                    "executionTime": "0:00.00"
+                },
+                "pluginMetrics": {
+                    "CPU Usage": "0%",
+                    "GPU Usage": "- %"
+                },
+                "value": "[1,1,12,13,155,8765]",
+                "error_msg": ""
+            }
+        },
+        "average_memory_usage": "0.0 KB",
+        "average_cpu_usage": "0.0 %",
+        "average_time": "0:00:00",
+        "total_run_time": "0:00:00"
+    },
+    "differential": {
+        "test_count": "2",
+        "matched": "0",
+        "no_match": "2",
+        "failed": [
+            {
+                "test_id": "0",
+                "input": [
+                    "[3, 2, 1]"
+                ],
+                "cells": {
+                    "0": {
+                        "value": "[1, 2, 3]",
+                        "error_msg": ""
+                    },
+                    "expected_output": {
+                        "value": "[1,2,3]",
+                        "error_msg": ""
+                    }
+                }
+            },
+            {
+                "test_id": "1",
+                "input": [
+                    "[12, 11, 1, 1, 155, 13, 8765]"
+                ],
+                "cells": {
+                    "0": {
+                        "value": "[1, 1, 11, 12, 13, 155, 8765]",
+                        "error_msg": ""
+                    },
+                    "expected_output": {
+                        "value": "[1,1,12,13,155,8765]",
+                        "error_msg": ""
+                    }
+                }
+            }
+        ]
+    }
+}
+
+// This is the output if you run the example_cpp_vector_request

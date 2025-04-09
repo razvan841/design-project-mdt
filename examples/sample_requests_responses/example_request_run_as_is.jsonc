@@ -1,0 +1,42 @@
+{
+    "message":
+    {
+        "options":
+        [
+            {
+                "cell_id":0,
+                "code": "import time\ndef sum(a, b):\n\ttime.sleep(6)\n\treturn a + b\n\nimport sys\ndef main():\n\ta = int(sys.argv[1])\n\tb = int(sys.argv[2])\n\tresult = sum(a, b)\n\tprint(result)\nif __name__ == '__main__':\n\tmain()",
+                "signature": {
+                    "name": "sum",
+                    "args":{
+                        "a": "int",
+                        "b": "int"
+                    },
+                    "return": "int"
+                },
+                "language": "Python",
+                "version": "3.10.7",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": true
+            }
+ 
+        ],
+
+        "input": [
+            ["1", "2"],
+            ["3", "4"]
+        ],
+        "output": [
+            3,
+            7
+        ],
+        "generate_test_cases": false,
+        "timeout": 5
+    }
+}
+
+
+// example request that makes use of the run as is functionality
+// Timeout is also set to 5 intentionally to cause a timeout. Change it to a higher value or remove the sleep to see expected output

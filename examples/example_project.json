@@ -1,0 +1,223 @@
+{
+  "finalValues": {
+    "cells": [
+      {
+        "name": "sum_good",
+        "args": [
+          "list[int]"
+        ],
+        "return": "int",
+        "specs": "",
+        "run_as_is": false
+      },
+      {
+        "name": "sum_bad",
+        "args": "",
+        "return": "",
+        "specs": "",
+        "run_as_is": false
+      }
+    ],
+    "input": [
+      [
+        "[1, 2, 3, 4]"
+      ],
+      [
+        "[4, 2, 1, 15]"
+      ],
+      [
+        "[1, 9, 10]"
+      ]
+    ],
+    "output": [
+      [
+        "10"
+      ],
+      [
+        "22"
+      ],
+      [
+        "20"
+      ]
+    ],
+    "timeout": "",
+    "generate_test_cases": false,
+    "test_cases_signature": "",
+    "test_cases_count": ""
+  },
+  "codeCells": [
+    {
+      "codeText": "def sum_good(v: list) -> int:\r\n    return sum(v)\r\n\r\ndef sum_bad(v: list) -> int:\r\n    result = sum(v)\r\n    if result == 10:\r\n        return 11\r\n    return result",
+      "language": "python",
+      "version": "3.10",
+      "compiler": ""
+    },
+    {
+      "codeText": "def sum_good(v: list) -> int:\r\n    return sum(v)\r\n\r\ndef sum_bad(v: list) -> int:\r\n    result = sum(v)\r\n    if result == 10:\r\n        return 11\r\n    return result",
+      "language": "python",
+      "version": "3.10",
+      "compiler": ""
+    }
+  ],
+  "data_response": {
+    "0": {
+      "outputs": {
+        "0": {
+          "defaultMetrics": {
+            "memoryUsage": "11324 KB",
+            "executionTime": "0m 0.18s"
+          },
+          "pluginMetrics": {
+            "CPU Usage": "95%",
+            "GPU Usage": "- %"
+          },
+          "value": "10",
+          "error_msg": ""
+        },
+        "1": {
+          "defaultMetrics": {
+            "memoryUsage": "7512 KB",
+            "executionTime": "0m 0.03s"
+          },
+          "pluginMetrics": {
+            "CPU Usage": "77%",
+            "GPU Usage": "- %"
+          },
+          "value": "22",
+          "error_msg": ""
+        },
+        "2": {
+          "defaultMetrics": {
+            "memoryUsage": "7576 KB",
+            "executionTime": "0m 0.03s"
+          },
+          "pluginMetrics": {
+            "CPU Usage": "69%",
+            "GPU Usage": "- %"
+          },
+          "value": "20",
+          "error_msg": ""
+        }
+      },
+      "average_memory_usage": "8804.0 KB",
+      "average_cpu_usage": "80.33 %",
+      "average_time": "0:00:00.080000",
+      "total_run_time": "0:00:00.240000"
+    },
+    "1": {
+      "outputs": {
+        "0": {
+          "defaultMetrics": {
+            "memoryUsage": "11388 KB",
+            "executionTime": "0m 0.17s"
+          },
+          "pluginMetrics": {
+            "CPU Usage": "94%",
+            "GPU Usage": "- %"
+          },
+          "value": "11",
+          "error_msg": ""
+        },
+        "1": {
+          "defaultMetrics": {
+            "memoryUsage": "7568 KB",
+            "executionTime": "0m 0.03s"
+          },
+          "pluginMetrics": {
+            "CPU Usage": "85%",
+            "GPU Usage": "- %"
+          },
+          "value": "22",
+          "error_msg": ""
+        },
+        "2": {
+          "defaultMetrics": {
+            "memoryUsage": "7560 KB",
+            "executionTime": "0m 0.03s"
+          },
+          "pluginMetrics": {
+            "CPU Usage": "88%",
+            "GPU Usage": "- %"
+          },
+          "value": "20",
+          "error_msg": ""
+        }
+      },
+      "average_memory_usage": "8838.67 KB",
+      "average_cpu_usage": "89.0 %",
+      "average_time": "0:00:00.076667",
+      "total_run_time": "0:00:00.230000"
+    },
+    "expected_output": {
+      "outputs": {
+        "0": {
+          "defaultMetrics": {
+            "memoryUsage": "0 KB",
+            "executionTime": "0:00.00"
+          },
+          "pluginMetrics": {
+            "CPU Usage": "0%",
+            "GPU Usage": "- %"
+          },
+          "value": "10",
+          "error_msg": ""
+        },
+        "1": {
+          "defaultMetrics": {
+            "memoryUsage": "0 KB",
+            "executionTime": "0:00.00"
+          },
+          "pluginMetrics": {
+            "CPU Usage": "0%",
+            "GPU Usage": "- %"
+          },
+          "value": "22",
+          "error_msg": ""
+        },
+        "2": {
+          "defaultMetrics": {
+            "memoryUsage": "0 KB",
+            "executionTime": "0:00.00"
+          },
+          "pluginMetrics": {
+            "CPU Usage": "0%",
+            "GPU Usage": "- %"
+          },
+          "value": "20",
+          "error_msg": ""
+        }
+      },
+      "average_memory_usage": "0.0 KB",
+      "average_cpu_usage": "0.0 %",
+      "average_time": "0:00:00",
+      "total_run_time": "0:00:00"
+    },
+    "differential": {
+      "test_count": "3",
+      "matched": "2",
+      "no_match": "1",
+      "failed": [
+        {
+          "test_id": "0",
+          "input": [
+            "[1, 2, 3, 4]"
+          ],
+          "cells": {
+            "0": {
+              "value": "10",
+              "error_msg": ""
+            },
+            "1": {
+              "value": "11",
+              "error_msg": ""
+            },
+            "expected_output": {
+              "value": "10",
+              "error_msg": ""
+            }
+          }
+        }
+      ]
+    }
+  }
+}

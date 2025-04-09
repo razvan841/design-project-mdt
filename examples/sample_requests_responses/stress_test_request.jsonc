@@ -1,0 +1,277 @@
+{
+    "message":
+    {
+        "options":
+        [
+            {
+                "cell_id":0,
+                "code": "def mul(a, b):\n\treturn a + b\n",
+                "signature": {
+                    "name": "mul",
+                    "args":["float", "float"],
+                    "return": "float"
+                },
+                "language": "Python",
+                "version": "3.11",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": false
+            },
+            {
+                "cell_id":1,
+                "code": "def mul(a, b):\n\treurn a + b\n",
+                "signature": {
+                    "name": "mul",
+                    "args":["float", "float"],
+                    "return": "float"
+                },
+                "language": "Python",
+                "version": "3.10",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": false
+            },
+            {
+                "cell_id":2,
+                "code": "def mul(a, b):\n\treturn a + b\n\nimport sys,ast\ndef main():\n\tx0 = float(sys.argv[1])\n\tx1 = float(sys.argv[2])\n\tresult = mul(x0, x1)\n\tprint(result)\nif __name__ == \"__main__\":\n\tmain()",
+                "signature": {
+                },
+                "language": "python",
+                "version": "3.9",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": true
+            },
+            {
+                "cell_id":3,
+                "code": "def mul(a, b):\n\tretun a + b\n\nimport sys,ast\ndef main():\n\tx0 = float(sys.argv[1])\n\tx1 = float(sys.argv[2])\n\tresult = mul(x0, x1)\n\tprint(result)\nif __name__ == \"__main__\":\n\tmain()",
+                "signature": {
+                },
+                "language": "python",
+                "version": "3.8",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": true
+            },
+            {
+                "cell_id":4,
+                "code": "#include <iostream>\n\nfloat mul(float a, float b) { return a * b;}",
+                "signature": {
+                    "name": "mul",
+                    "args":{
+                        "a": "float",
+                        "b": "float"
+                    },
+                    "return": "float"
+                },
+                "language": "cpp",
+                "version": "",
+                "compiler":"gcc",
+                "specs": {
+                },
+                "run_as_is": false
+            },
+            {
+                "cell_id":5,
+                "code": "#include <iostram>\n\nfloat mul(float a, float b) { retur a * b;}",
+                "signature": {
+                    "name": "mul",
+                    "args":{
+                        "a": "float",
+                        "b": "float"
+                    },
+                    "return": "float"
+                },
+                "language": "cpp",
+                "version": "",
+                "compiler":"gcc",
+                "specs": {
+                },
+                "run_as_is": false
+            },
+            {
+                "cell_id":6,
+                "code": "#include <iostream>\n\nfloat mul(float a, float b) { return a * b;}",
+                "signature": {
+                    "name": "mul",
+                    "args":{
+                        "a": "float",
+                        "b": "float"
+                    },
+                    "return": "float"
+                },
+                "language": "cpp",
+                "version": "",
+                "compiler":"clang",
+                "specs": {
+                },
+                "run_as_is": false
+            },
+            {
+                "cell_id":7,
+                "code": "#include <vector>\n#include <string>\n\n#include <iostream>\n\nfloat mul(float a, float b) { return a * b;}\n\n#include <iostream>\n#include \"cast.cpp\"\nint main(int argc, const char* argv[])\n{\n\tfloat a;\n\tfloat b;\n\tfloat result;\n\ta = cast<float>(argv[1]);\n\tb = cast<float>(argv[2]);\n\tresult = mul(a, b);\n\tstd::cout << result << std::endl;\n\treturn 0;\n}",
+                "signature": {
+                },
+                "language": "cpp",
+                "version": "",
+                "compiler":"gcc",
+                "specs": {
+                },
+                "run_as_is": true
+            },
+            {
+                "cell_id":8,
+                "code": "#include <vector>\n#include <string>\n\n#include <iostream>\n\nfloat mul(float a, float b) { return a * b;}\n\n#include <iostream>\n#include \"cast.cpp\"\nint main(int argc, const char* argv[])\n{\n\tfloat a;\n\tfloat b;\n\tfloat result;\n\ta = cast<float>(argv[1]);\n\tb = cast<float>(argv[2]);\n\tresult = mul(a, b);\n\tstd::cout << result << std::endl;\n\tretun 0;\n}",
+                "signature": {
+                },
+                "language": "cpp",
+                "version": "",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": true
+            },
+            {
+                "cell_id":9,
+                "code": "<?php\nfunction mul($a, $b) {\n\treturn $a * $b;\n}\n?>",
+                "signature": {
+                    "name": "mul",
+                    "args":{
+                        "a": "float",
+                        "b": "float"
+                    },
+                    "return": "float"
+                },
+                "language": "php",
+                "version": "php:8.3",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": false
+            },
+            {
+                "cell_id":10,
+                "code": "<?php\nfunction mul(a, $b) {\n\treturn $a * $b;\n}\n?>",
+                "signature": {
+                    "name": "mul",
+                    "args":{
+                        "a": "float",
+                        "b": "float"
+                    },
+                    "return": "float"
+                },
+                "language": "php",
+                "version": "php:5.6",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": false
+            },
+            {
+                "cell_id":11,
+                "code": "<?php\n\nfunction mul($a, $b) {\n\treturn $a * $b;\n}\n\n\t$a = (float) ($argv[1]);\n\t$b = (float) ($argv[2]);\n\t$result = mul($a, $b);\n\techo json_encode($result);\n\n?>",
+                "signature": {
+                },
+                "language": "php",
+                "version": "php:7.4",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": true
+            },
+            {
+                "cell_id":12,
+                "code": "<?php\n\nfunction mul(a, $b) {\n\treturn $a * $b;\n}\n\n\t$a = (float) ($argv[1]);\n\t$b = (float) ($argv[2]);\n\t$result = mul($a, $b);\n\techo json_encode($result);\n\n?>",
+                "signature": {
+                },
+                "language": "php",
+                "version": "php:7.4",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": true
+            },
+            {
+                "cell_id":13,
+                "code": "function mul(a, b) {\n\treturn a * b;\n}",
+                "signature": {
+                    "name": "mul",
+                    "args":{
+                        "a": "float",
+                        "b": "float"
+                    },
+                    "return": "float"
+                },
+                "language": "js",
+                "version": "node:19",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": false
+            },
+            {
+                "cell_id":14,
+                "code": "function mul(a, b) {\n\trurn a * b;\n}",
+                "signature": {
+                    "name": "mul",
+                    "args":{
+                        "a": "float",
+                        "b": "float"
+                    },
+                    "return": "float"
+                },
+                "language": "js",
+                "version": "node:16",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": false
+            },
+            {
+                "cell_id":16,
+                "code": "function mul(a, b) {\n\treturn a * b;\n}\n\n\ta = parseFloat(process.argv[2])\n\tb = parseFloat(process.argv[3])\n\tresult = mul(a, b)\n\tconsole.log(result)",
+                "signature": {
+                },
+                "language": "js",
+                "version": "node:14",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": true
+            },
+            {
+                "cell_id":17,
+                "code": "function mul(a, b) {\n\treturn a * b;\n}\n\n\ta = parseFloat(process.argv[2])\n\tb = parseoat(process.argv[3])\n\tresult = mul(a, b)\n\tconsole.log(result)",
+                "signature": {
+                },
+                "language": "js",
+                "version": "node:12",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": true
+            }
+
+
+        ],
+
+        "input": [
+            ["2","2"],
+            ["15", "3"]
+        ],
+        "output": [
+            ["4"],
+            ["45"]
+        ],
+        "generate_test_cases": false,
+        "timeout": 100
+    }
+}
+
+
+// Stress test request. Includes code in python, cpp, js and php
+// Includes cells with broken code, cells with run_as_is = true

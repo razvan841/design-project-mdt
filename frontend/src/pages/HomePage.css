@@ -1,0 +1,30 @@
+.mainHPContainer {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    margin: auto;
+}
+
+
+.logoContainer {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+    width: 50%;
+    height: 30%;
+}
+
+.buttonsContainer {
+    display: flex;
+    justify-content: space-evenly;
+
+    margin-left: 10%;
+    margin-right: 10%;
+}
+

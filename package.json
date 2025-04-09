@@ -1,0 +1,49 @@
+{
+    "main": "main.js",
+    "type": "commonjs",
+    "name": "CompareMDT",
+    "version": "0.1.0",
+    "scripts": {
+        "start": "electron .",
+        "clean": "rimraf dist",
+        "dist": "npm run clean && electron-builder",
+        "dist:win": "npm run clean && electron-builder --win",
+        "dist:mac": "npm run clean && electron-builder --mac",
+        "dist:linux": "npm run clean && electron-builder --linux",
+        "dist:all": "npm run clean && electron-builder --win --mac --linux"
+    },
+    "devDependencies": {
+        "electron": "^35.1.2"
+    },
+    "dependencies": {
+        "cross-spawn": "^7.0.6",
+        "electron-packager": "^17.1.2",
+        "wait-on": "^8.0.3"
+    },
+    "build": {
+        "asar": false,
+        "appId": "com.utwente.compare",
+        "productName": "Compare - MDT app",
+        "directories": {
+            "output": "dist"
+        },
+        "files": [
+            "**/*",
+            "!dist/**/*",
+            "!.vscode/**",
+            "!examples/**",
+            "!tests/**",
+            "!venv/**",
+            "!.venv/**"
+        ],
+        "win": {
+            "target": "nsis"
+        },
+        "mac": {
+            "target": "dmg"
+        },
+        "linux": {
+            "target": "AppImage"
+        }
+    }
+}

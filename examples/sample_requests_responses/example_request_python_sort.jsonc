@@ -1,0 +1,40 @@
+{
+    "message":
+    {
+        "options":
+        [
+            {
+                "cell_id":0,
+                "code": "def bubble_sort(arr):\n    n = len(arr)\n    for i in range(n):\n        for j in range(0, n - i - 1):\n            if arr[j] > arr[j + 1]:\n                arr[j], arr[j + 1] = arr[j + 1], arr[j]\ndef merge_sort(arr):\n    if len(arr) > 1:\n        mid = len(arr) // 2\n        left_half = arr[:mid]\n        right_half = arr[mid:]\n        merge_sort(left_half)\n        merge_sort(right_half)\n        i = j = k = 0\n        while i < len(left_half) and j < len(right_half):\n            if left_half[i] < right_half[j]:\n                arr[k] = left_half[i]\n                i += 1\n            else:\n                arr[k] = right_half[j]\n                j += 1\n            k += 1\n        while i < len(left_half):\n            arr[k] = left_half[i]\n            i += 1\n            k += 1\n        while j < len(right_half):\n            arr[k] = right_half[j]\n            j += 1\n            k += 1\ndef sort_array(arr, use_bubble_sort=True):\n    if use_bubble_sort:\n        bubble_sort(arr)\n    else:\n        merge_sort(arr)\n    return arr",
+                "signature": {
+                    "name": "sort_array",
+                    "args":["list[int]", "bool"],
+                    "return": "list[int]"
+                },
+                "language": "Python",
+                "version": "3.10.2",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": false
+            }
+
+        ],
+
+        "input": [
+            ["[64, 34, 25, 12, 22, 11, 90]", "True"],
+            ["[64, 34, 25, 12, 22, 11, 90]", "False"]
+        ],
+        "output": [
+            3,
+            10
+        ],
+        "generate_test_cases": true,
+        "test_cases_count": 3,
+        "test_cases_signature": ["list[int]", "bool"],
+        "timeout": 50
+    }
+}
+
+// Example request with one cell for python
+// generate test cases set to true => test count and test signature required

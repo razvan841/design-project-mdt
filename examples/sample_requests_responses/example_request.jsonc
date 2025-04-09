@@ -1,0 +1,56 @@
+{
+    "message":
+    {
+        "options":
+        [
+            {
+                "cell_id":0,
+                "code": "def sum_numbers(a, b):\n    return a + b\n",
+                "signature": {
+                    "name": "sum_numbers",
+                    "args":["int", "int"],
+                    "return": "int"
+                },
+                "language": "Python",
+                "version": "3.11.1",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": false
+            },
+            {
+                "cell_id":1,
+                "code": "#include <iostream>\n\nint pow(int a, int b) { return b == 0 ? 1 : a * pow(a, b - 1); }",
+                "signature": {
+                    "name": "pow",
+                    "args":["int", "int"],
+                    "return": "int"
+                },
+                "language": "cpp",
+                "version": "",
+                "compiler":"",
+                "specs": {
+                },
+                "run_as_is": false
+            }
+
+        ],
+
+        "input": [
+            ["1","2"],
+            ["5","5"],
+            ["11", "3"]
+        ],
+        "output": [
+            ["3"],
+            ["10"],
+            ["14"]
+        ],
+        "generate_test_cases": false,
+        "timeout": 60
+    }
+}
+
+
+// Example request with the most likely setup: i.e. timeout default to 60 and run_as_is is false everywhere
+// The second function has different behavior than the first precisely to see the differential part of the response

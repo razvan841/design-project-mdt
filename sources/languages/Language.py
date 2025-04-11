@@ -88,7 +88,7 @@ class Language:
             new_return = self.parse_type(return_type)
         else:
             new_return = self.type_dict.get(return_type, "")
-            if not return_type:
+            if not new_return:
                 logger.error(f"{self.extension} Language check_signature: Didn't match any argument type for arg: {return_type}")
                 raise ArgumentNotFoundException("Didn't match any argument type")
 

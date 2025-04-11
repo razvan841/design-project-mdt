@@ -43,7 +43,9 @@
     "timeout": "",
     "generate_test_cases": false,
     "test_cases_signature": "",
-    "test_cases_count": ""
+    "test_cases_count": "",
+    "raw_input": "[1, 2, 3, 4]\n[4, 2, 1, 15]\n[1, 9, 10]",
+    "raw_output": "10\n22\n20"
   },
   "codeCells": [
     {

@@ -72,9 +72,9 @@ export default function SettingsPage() {
           return acc[key];
         }, newValues);
       } else if (name === "input") {
-        newValues.input = value;
+        newValues.raw_input = value;
       } else if (name === "output") {
-        newValues.output = value;
+        newValues.raw_output = value;
       } else if (name === "timeout") {
         if (/^\d*$/.test(value) && value != "" && value[0] != "0") {
           newValues.timeout = parseInt(value, 10)
@@ -95,6 +95,9 @@ export default function SettingsPage() {
   };
 
   const parseArg = (arg) => {
+    if (isString(arg)) {
+        return "\"" + arg + "\"";
+    }
     if (Array.isArray(arg)) {
       arg = arg.map(parseArg).join(", ");
       arg = "[" + arg + "]";
@@ -105,21 +108,26 @@ export default function SettingsPage() {
   const parseArguments = (input) => {
     input = "[" + input + "]";
     let json_input = JSON.parse(input);
+    console.log("Object input: ", json_input);
     let output = json_input.map(parseArg);
+    console.log("Parsed input: ", output);
     return output;
   };
+
+  const parseField = (input) => {
+    let rows = input.split("\n");
+    let rows_parsed = rows.map((row) => parseArguments(row));
+    let rows_filtered = rows_parsed.filter((row) => row.length > 0);
+    return rows_filtered;
+  }
 
   const isString = (value) => typeof value === 'string' || value instanceof String;
 
   const saveSignature = () => {
-    if (isString(draftValues.input)) {
-      draftValues.input = draftValues.input.split("\n").map((row) => parseArguments(row)).filter((row) => row.length > 0);
-    }
-    if (isString(draftValues.output)) {
-      draftValues.output = draftValues.output.split("\n").map((row) => parseArguments(row)).filter((row) => row.length > 0);
-    }
+    draftValues.input = parseField(draftValues.raw_input);
+    draftValues.output = parseField(draftValues.raw_output);
     saveFinalValues();
-    setAlertVisibleCellSignature(true)
+    setAlertVisibleCellSignature(true);
     // alert("Changes saved!", draftValues);
     // console.log(codeCells)
   }
@@ -400,10 +408,8 @@ export default function SettingsPage() {
                         <span> Input Values </span>
                         <textarea
                           name="input"
-                          value={Array.isArray(draftValues.input)
-                            ? draftValues.input.map(row => row.join(", ")).join("\n")
-                            : draftValues.input}
-                          onChange={handleChange}
+                        onChange={handleChange}
+                        value={draftValues.raw_input}
                           rows={5}
                           cols={15}
                           placeholder={`1, 2 \n3, 6`}
@@ -413,9 +419,7 @@ export default function SettingsPage() {
                         <span> Output Values </span>
                         <textarea
                           name="output"
-                          value={Array.isArray(draftValues.output)
-                            ? draftValues.output.map(row => row.join(", ")).join("\n")
-                            : draftValues.output}
+                        value={draftValues.raw_output}
                           onChange={handleChange}
                           rows={5}
                           cols={15}

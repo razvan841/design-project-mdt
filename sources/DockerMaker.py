@@ -81,7 +81,7 @@ class DockerMaker:
     def copy_all(self) -> str:
         return self.COPY_ALL
 
-    def add_compile(self, version: str, compiler: str, function_name: str, specs: dict) -> str:
+    def add_compile(self, version: str, compiler: str, function_name: str, specs: list) -> str:
         return ""
 
     def add_sleep_command(self) -> str:

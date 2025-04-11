@@ -37,7 +37,7 @@ class JSLanguage(Language):
             self.CAST_RAW = "\type(\var)"
             self.ARGS = "process.argv[\index]"
             self.ARG_OFFSET = 2
-            self.LIST_CAST = "JSON.parse(\var)"
+            self.LIST_CAST = "JSON.parse(\var.replace(/'/g, '\"'))"
             self.CAST_BOOL = "\var.toLowerCase()===\"true\""
             self.CAST_INT = "parseInt(\var)"
             self.CAST_FLOAT = "parseFloat(\var)"

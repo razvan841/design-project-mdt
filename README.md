@@ -23,6 +23,7 @@
 - [Adding Additional Metrics](#adding-additional-metrics)
 - [Changing how the output is parsed](#changing-how-the-output-is-parsed)
 - [Testing the backend via an API testing tool](#testing-the-backend-via-an-api-testing-tool)
+- [Experimental feature branch](#experimental-feature-branch)
 
 # License
 
@@ -256,3 +257,14 @@ For backend development, we have a couple of API request examples in the example
 - `timeout` flag (optional): given as an int of seconds, minimum value 5 seconds
 - `generate_test_cases` flag: if you want to generate test cases automatically, set this to true and add the `test_cases_count` (optional, default = 25) and `test_cases_signature` (mandatory!)
 - `manual tests`: give the input/output fields. Make sure each input and output is a list
+
+# Experimental feature branch
+
+In the repository you will find a branch called "experimental_features", which includes backend implementations for the following features:
+
+- fixes timeout bug (the system didn't correctly kill the execution process, so the container will remain in execution after the timeout)
+- support for configuring intervals in the TestCasesGenerator (the execute_code api route now can include a dict with intervals from which the random values are taken)
+- implementation of the Go Language
+- implementation of the C# Language
+
+**WARNING!** This features might not be completely implemented or might cause bugs

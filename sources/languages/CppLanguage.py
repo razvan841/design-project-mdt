@@ -104,7 +104,7 @@ class CppLanguage(Language):
         def __init__(self):
             super().__init__()
 
-        def generate_dockerfile(self, version: str, compiler: str, function_name: str, specs: dict, index: int) -> None:
+        def generate_dockerfile(self, version: str, compiler: str, function_name: str, specs: list, index: int) -> None:
             '''
             Overrides the generate_dockerfile because the dockerfile for cpp requires extra commands
             '''
@@ -214,7 +214,7 @@ class CppLanguage(Language):
         '''
         type_str = type_str.replace(" ", "")
         open_brackets = type_str.count("[")
-        type_str = type_str.replace("list[", "std::vector<").replace("[", "std::vector<")
+        type_str = type_str.replace("list[", "std::vector<").replace("[", "std::vector<").replace("string", "std::string")
         type_str = type_str.replace("]", "")
         type_str += ">" * open_brackets
         return type_str

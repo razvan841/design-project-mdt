@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with the source code. If not, see <https://www.gnu.org/licenses/>.
 """
-import os,sys, shlex
+import os,sys
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.abspath(os.path.join(current_dir, ".."))
 sys.path.append(parent_dir)
@@ -142,7 +142,7 @@ class JavaLanguage(Language):
                     logger.warning("Didn't match any compiler, adding amazoncorretto!")
                     return f"FROM amazoncorretto:latest-alpine\n\n"
 
-        def add_compile(self, version : str, compiler : str, function_name : str, specs : dict) ->str:
+        def add_compile(self, version : str, compiler : str, function_name : str, specs : list) ->str:
 
             return f"RUN javac parse.java {function_name}_injected.java\n\n"
 
@@ -168,7 +168,7 @@ class JavaLanguage(Language):
         return ["javac" , "parse.java" ,f"{function_name}.java"]
 
     def generate_run_command(self, function_name:str, input:list) :
-        return ["java" , function_name] + [shlex.quote(i) for i in input]
+        return ["java" , function_name] + input
 
     def parse_type(self, type_str: str):
         type_map = {

@@ -94,7 +94,12 @@ class PHPLanguage(Language):
             return "\n?>"
 
         def initialize_item(self, name: str, type: str, arg_index: int):
-            return self.INDENT + self.DOLLAR + name + self.SEP + self.ASSIGN + self.SEP + self.cast(self.get_arg(arg_index), type) + self.ENDLINE + self.NEWLINE
+            logger.warning(type)
+            if type == "list":
+                fix = f"$g{arg_index} = str_replace(\"'\", '\"', $argv[{arg_index}]);\n"
+                assign = f"${name} = json_decode($g{arg_index}, true);\n"
+                return fix + assign
+            return self.DOLLAR + name + self.SEP + self.ASSIGN + self.SEP + self.cast(self.get_arg(arg_index), type) + self.ENDLINE + self.NEWLINE
 
         def call(self, signature: dict) -> str:
             params = ""
@@ -105,7 +110,7 @@ class PHPLanguage(Language):
                 if i < len(args) - 1:
                     params += self.COMMA
                     params += self.SEP
-            return self.INDENT + self.DOLLAR +  self.OUTPUT_NAME + self.SEP + self.ASSIGN + self.SEP + signature["name"] + "(" + params + ")" + self.ENDLINE + self.NEWLINE
+            return self.DOLLAR +  self.OUTPUT_NAME + self.SEP + self.ASSIGN + self.SEP + signature["name"] + "(" + params + ")" + self.ENDLINE + self.NEWLINE
 
     class PHPDockerMaker(DockerMaker):
         def __init__(self):

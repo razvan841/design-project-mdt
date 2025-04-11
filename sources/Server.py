@@ -65,6 +65,7 @@ class FlaskServer:
                 generate_test_cases = data.get("message", {}).get("generate_test_cases", False)
                 test_count = data.get("message", {}).get("test_cases_count", 25)
                 test_signature = data.get("message", {}).get("test_cases_signature", [])
+                test_parameters = data.get("message", {}).get("test_cases_parameters", {})
                 timeout = data.get("message", {}).get("timeout", 60)
                 exec_logger.info(f"Code cells: {len(options)}")
 
@@ -80,7 +81,7 @@ class FlaskServer:
                 if generate_test_cases == True:
                     try:
                         generator = TestCasesGenerator()
-                        generated_inputs = generator.generate_test_cases(test_signature, test_count)
+                        generated_inputs = generator.generate_test_cases(test_signature, test_count, test_parameters)
                         input_data = generated_inputs
 
                     except Exception as e:

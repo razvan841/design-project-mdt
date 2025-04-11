@@ -20,12 +20,30 @@ import re
 from sources.CustomException import *
 from sources.LoggerConfig import logger
 
+default_parameters = {
+    "int":{
+        "min": -200,
+        "max": 200
+    },
+    "float": {
+        "min":-200.0,
+        "max":200.0
+    },
+    "string_length":{
+        "min": 3,
+        "max": 15
+    },
+    "list_size":{
+        "min": 2,
+        "max": 5
+    }
+}
 
 class TestCasesGenerator:
     def __init__(self):
         pass
 
-    def generate_test_cases(self, args: list, test_count: int = 25) -> list:
+    def generate_test_cases(self, args: list, test_count: int = 25, test_parameters : dict = default_parameters) -> list:
         '''
         Main function for generating test cases. Makes use of the functions below to generate the data
         '''
@@ -40,9 +58,9 @@ class TestCasesGenerator:
                 for arg in args:
                     if "list[" in arg:
                         type_structure = self.parse_type(arg)
-                        test_case.append(str(self.generate_random_list(type_structure)))
+                        test_case.append(str(self.generate_random_list(type_structure, test_parameters)))
                     else:
-                        test_case.append(str(self.random_value(arg)))
+                        test_case.append(str(self.random_value(arg, test_parameters)))
             except Exception as e:
                 raise GenerateTestCasesException(f"{str(e)}")
             test_cases.append(test_case)
@@ -68,14 +86,28 @@ class TestCasesGenerator:
     def random_bool(self) -> bool:
         return random.choice([True, False])
 
-    def random_value(self, arg: str):
+    def random_value(self, arg: str, parameters: dict = default_parameters):
+        int = parameters.get("int", {})
+        int_min = int.get("min", -200)
+        int_max = int.get("max", 200)
+        float = parameters.get("float", {})
+        float_min = float.get("min", -200.0)
+        float_max = float.get("max", 200.0)
+        string = parameters.get("string", {})
+        string_min = string.get("min", 3)
+        string_max = string.get("max", 15)
+
+        if int_min >= int_max or float_min >= float_max or string_min >= string_max:
+            logger.error("minimal value is larger than maximal value!")
+            raise ValueError("minimal value is larger than maximal value!")
+
         match arg:
             case "int":
-                return self.random_int()
+                return self.random_int(int_min, int_max)
             case "string":
-                return self.random_string()
+                return self.random_string(string_min, string_max)
             case "double" | "float":
-                return self.random_float()
+                return self.random_float(float_min, float_max)
             case "bool":
                 return self.random_bool()
             case "char":
@@ -100,17 +132,24 @@ class TestCasesGenerator:
 
         return result
 
-    def generate_random_list(self, type_structure) -> list:
+    def generate_random_list(self, type_structure, parameters: dict = default_parameters) -> list:
         '''
         Recursive function for generating lists and nested lists. It needs a format provided by the parse_type function
         '''
-        if not isinstance(type_structure, list) or type_structure[0] not in ["list", "vector"]:
+        if not isinstance(type_structure, list) or type_structure[0] not in ["list"]:
             raise ValueError("Invalid structure format.")
 
-        sub_type = type_structure[1]
-        list_length = random.randint(2, 5)
+        list = parameters.get("list", {})
+        list_min = list.get("min", 2)
+        list_max = list.get("max", 5)
+        if list_min >= list_max:
+            logger.error("minimal value is larger than maximal value!")
+            raise ValueError("minimal value is larger than maximal value!")
 
-        if isinstance(sub_type, list) and sub_type[0] in ["list", "vector"]:
+        sub_type = type_structure[1]
+        list_length = random.randint(list_min, list_max)
+
+        if isinstance(sub_type, list) and sub_type[0] in ["list"]:
             return [self.generate_random_list(sub_type) for _ in range(list_length)]
         else:
             return [self.random_value(sub_type) for _ in range(list_length)]

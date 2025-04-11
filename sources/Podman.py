@@ -277,7 +277,7 @@ class Podman:
         if metrics:
             command = ["/usr/bin/time", "-v"] + command
         command_split = ["podman", "exec", container_name] + command
-        exec_output = subprocess.run(command_split, capture_output=True, shell=SHELL, timeout=timeout)
+        exec_output = subprocess.run(command_split, capture_output=True, shell=False, timeout=timeout)
         logger.info(f'Podman exec_command: Executed command {command} on container {container_name} with output:')
         self.print_process_output(exec_output)
         output = self.completed_process_to_lines(exec_output)

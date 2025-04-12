@@ -53,7 +53,7 @@ class LanguageFactory:
                 return JavaLanguage()
             case "go":
                 return GoLanguage()
-            case "c#":
+            case "c#" | "cs":
                 return CSLanguage()
             case _:
                 logger.error(f"Language Factory get_language: Language not found: {language}")

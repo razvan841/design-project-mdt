@@ -90,13 +90,15 @@ class ContainerManager:
         container that is not being used, it removes it and creates a new container to run the code in.
         '''
         environment = self.get_environment(data)
+        language = environment.get("language", "")
         container_to_remove = None
         with index_lock:
             index = self.check_containers(environment)
         outputs = []
         i = 0
         try:
-            if index != -1:
+            # C# can't make use of container recycling
+            if index != -1 and language != "cs" and language != "c#":
                 container, _, __ = self.containers[index]
                 container.set_metadata(data)
                 container.set_run_as_is(run_as_is)

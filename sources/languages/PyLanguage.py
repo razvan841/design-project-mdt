@@ -82,10 +82,13 @@ class PyLanguage(Language):
         self.extension = "py"
         self.available_versions = ["2.7", "3.5", "3.6", "3.7", "3.8", "3.9", "3.10", "3.11", "3.12"]
         self.available_compilers = []
+        # Python doesn't support double or char, so fall back to supported types
         self.type_dict = {
                 "int": "int",
                 "string": "str",
+                "char": "str",
                 "float": "float",
+                "double": "float",
                 "bool": "bool"
             }
 

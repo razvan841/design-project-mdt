@@ -134,10 +134,13 @@ class PHPLanguage(Language):
         self.available_versions = ["php:8.3", "php:7.4", "php:5.6"]
         self.available_compilers = []
         self.extension = "php"
+        # PHP doesn't support double or char, so fall back to supported types
         self.type_dict = {
                 "int": "int",
                 "string": "string",
+                "char": "string",
                 "float": "float",
+                "double": "float",
                 "bool": "bool"
             }
 

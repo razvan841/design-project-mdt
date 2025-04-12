@@ -180,7 +180,7 @@ class ResultParser:
                     }
         return test_cases
 
-    def get_differential(self, input: dict) -> dict:
+    def get_differential(self, input: list) -> dict:
         '''
         Checks if all code cells return the same output for each input
         If not, creates a dict, highlighting the different outputs between code cells

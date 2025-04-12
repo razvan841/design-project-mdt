@@ -91,10 +91,13 @@ class JSLanguage(Language):
         self.available_versions = [ "node:current", "node:19", "node:18", "node:16", "node:14", "node:12"]
         self.available_compilers = []
         self.extension = "js"
+         # javascript doesn't support double or char, so fall back to supported types
         self.type_dict = {
                 "int": "int",
                 "string": "string",
+                "char": "string",
                 "float": "float",
+                "double": "float",
                 "bool": "bool"
             }
 

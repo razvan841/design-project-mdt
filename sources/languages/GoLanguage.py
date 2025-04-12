@@ -10,13 +10,19 @@ from sources.CustomException import *
 from sources.LoggerConfig import logger
 
 class GoLanguage(Language):
+    '''
+    Implementation of the Go Language
+    For some reason, the parser accepts only int and not int64 and only float64 and not float
+    Maybe i am just retarded
+    Sadly, i didn't implement lists, there is not much support for it and the injecting such a parser would suck. Maybe with a helper file would be easier
+    '''
     class GoInjector(Injector):
         '''
         Injector implementation for the C++ programming language
         '''
         def __init__(self):
             super().__init__()
-            self.helper_files = ["../resources/cast.cpp"]
+            self.helper_files = []
             self.PRINT_RAW = 'fmt.Printf("%f\\n",\var)'
             self.ARGS = "os.Args[\index]"
             self.ARG_OFFSET = 1
@@ -32,11 +38,11 @@ class GoLanguage(Language):
             '''
             try:
                 with open(source_path, "r") as input:
-                    code = input.read().replace("package main", "")
+                    raw_code = input.read()
             except Exception as e:
-                logger.error(f'Cpp Language inject: Failed to open source code file {source_path} with error: {e}')
+                logger.error(f'Go Language inject: Failed to open source code file {source_path} with error: {e}')
                 raise InjectException(f'Failed to open source code file {source_path} with error: {e}')
-            code = self.include() + code
+            code = self.include_import(raw_code, signature)
             code += self.NEWLINE + self.NEWLINE
             code += self.setup(signature)
             code += self.declare(signature)
@@ -48,18 +54,73 @@ class GoLanguage(Language):
                 with open(destination_path, "w") as output:
                     output.write(code)
             except Exception as e:
-                logger.error(f'Cpp Language inject: Failed to write to destination {destination_path} with error: {e}')
+                logger.error(f'Go Language inject: Failed to write to destination {destination_path} with error: {e}')
                 raise InjectException(f'Failed to write to destination {destination_path} with error: {e}')
 
-        def include(self):
-            '''
-            Include things like <vector> and <string>
-            '''
-            code = "package main\n"
-            code += """import (\n\t"fmt"\n\t"os"\n\t"strconv"\n)\n"""
-            return code
+        def include_import(self, code: str, signature : dict) -> str:
+            lines = code.splitlines()
 
-        def declare(self, signature):
+            inside_import_block = False
+            import_lines = []
+            args = signature.get("args", {})
+            if all(value == "string" for value in args.values()):
+                necessary_imports= {"fmt", "os"}
+            else:
+                necessary_imports = {"fmt", "os", "strconv"}
+
+            user_imports = set()
+            code_lines = []
+
+            # Traverse through the lines and separate the import block and other code
+            for i, line in enumerate(lines):
+                if line.strip().startswith("import (") or line.strip().startswith("import("):
+                    inside_import_block = True
+                    import_lines.append(line)
+                    continue
+                if inside_import_block and line.strip() == ")":
+                    inside_import_block = False
+                    import_lines.append(line)
+                    continue
+                if inside_import_block:
+                    import_lines.append(line)
+                elif line.strip().startswith("package main"):
+                    # Skip the package line, handle it separately later
+                    continue
+                else:
+                    code_lines.append(line)
+
+            # If the import block exists, collect libraries inside it
+            if import_lines:
+                raw_existing_imports = {line.strip().split()[0] for line in import_lines if line.strip() and not line.strip().startswith("//")}
+                # Add necessary imports to the existing ones
+                existing_imports = {s for s in raw_existing_imports if "import" not in s and ")" not in s}
+                stripped_set = {item.replace('"', '').replace("'", "") for item in existing_imports}
+                print(stripped_set)
+                user_imports = stripped_set
+            else:
+                user_imports = set()
+
+            # Combine necessary imports and user imports, ensuring no duplicates
+            combined_imports = necessary_imports.union(user_imports)
+
+            # Rebuild the code
+            new_code = []
+
+            # Add package main line
+            new_code.append("package main")
+
+            # Add import block with necessary and user libraries
+            new_code.append("import (")
+            for imp in sorted(combined_imports):  # Sorting imports (optional)
+                new_code.append(f'\t"{imp}"')
+            new_code.append(")")
+
+            # Add the remaining code lines
+            new_code.extend(code_lines)
+
+            return '\n'.join(new_code)
+
+        def declare(self, signature: dict) -> str:
             return ""
 
         def setup(self, signature: dict) -> str:
@@ -70,7 +131,7 @@ class GoLanguage(Language):
             match type:
                 case "bool":
                     return self.CAST_BOOL.replace(self.ESCAPE_VAR,arg)
-                case "int64":
+                case "int":
                     return self.CAST_INT.replace(self.ESCAPE_VAR,arg)
                 case "float64":
                     return self.CAST_FLOAT.replace(self.ESCAPE_VAR,arg)
@@ -81,6 +142,55 @@ class GoLanguage(Language):
 
         def wrap(self, signature: dict) -> str:
             return "\n}"
+
+        def initialize_item(self, name: str, type: str, arg_index: int):
+            '''
+            Initialize an individual variable from its respective program argument
+            '''
+            if type != "string":
+                assign = self.INDENT + name + self.COMMA + self.SEP + f"err{name}" + self.SEP + self.ASSIGN + self.SEP + self.cast(self.get_arg(arg_index), type) + self.ENDLINE + self.NEWLINE
+            else:
+                 assign = self.INDENT + name + self.SEP + self.ASSIGN + self.SEP + self.cast(self.get_arg(arg_index), type) + self.ENDLINE + self.NEWLINE
+
+            handle_error = ""
+            if type == "float64" or type == "int" or type == "bool":
+                handle_error = self.handle_error(name)
+
+            return assign + handle_error
+
+        def initialize(self, signature: dict) -> str:
+            '''
+            Initialize all variables necessary to call the function
+            '''
+            initializations = ""
+            args = signature["args"]
+            for index, (arg, type) in enumerate(args.items()):
+                initializations += self.initialize_item(arg, type, index + self.ARG_OFFSET)
+            return initializations
+
+        def handle_error(self, name: str) -> str:
+            check = f"\tif err{name} != nil " + "{\n"
+            print_line = '\t\tfmt.Println("Invalid input. Please enter valid values.")\n\t\treturn\n\t}\n'
+            return check + print_line
+
+        def print_result(self, signature: dict) -> str:
+            '''
+            Print function result
+            '''
+            return_type = signature.get("return", "")
+            a = "%s"
+            match return_type:
+                case "float64":
+                    a = "%f"
+                case "int":
+                    a = "%d"
+                case "string":
+                    a = "%s"
+                case "bool":
+                    a = "%t"
+            print_statement = self.INDENT + 'fmt.Printf("' + a + '",\var)'
+            return print_statement.replace(self.ESCAPE_VAR, self.OUTPUT_NAME)
+
 
 
     class GoDockerMaker(DockerMaker):
@@ -95,7 +205,6 @@ class GoLanguage(Language):
                 content += self.copy_all()
                 content += self.add_time(version, compiler)
                 content += self.add_libraries(version, compiler, specs)
-                content += self.add_compile(version, compiler, function_name, specs)
                 content += self.add_sleep_command()
 
                 try:
@@ -152,55 +261,17 @@ class GoLanguage(Language):
         self.available_versions = ["1.24", "1.22", "1.21", "1.19", "1.17"]
         self.available_compilers = ["gc"]
         self.extension = "go"
+        self.type_dict = {
+                "int": "int",
+                "string": "string",
+                "float": "float64",
+                "bool": "bool"
+            }
 
     def generate_compile_command(self, function_name: str, compiler_name: str) -> list:
         compiler = "go"
-        return [compiler, '-o', function_name, f'{function_name}.go']
+        return [compiler, 'build', f'{function_name}.go']
 
     def generate_run_command(self, function_name: str, input: list) -> list :
         command = [f"./{function_name}"]
         return command + input
-
-    def check_signature(self, signature):
-        args = signature.get('args', [])
-        return_type = signature.get('return', "")
-        name = signature.get('name', "")
-        if(isinstance(args, dict)):
-            return signature
-        new_args = {}
-        new_return = None
-        counter = 0
-        for arg in args:
-            match arg:
-                case "int":
-                    new_args[f"x{counter}"] = "int64"
-                case "string":
-                    new_args[f"x{counter}"] = "string"
-                case "float":
-                    new_args[f"x{counter}"] = "float64"
-                case "bool":
-                    new_args[f"x{counter}"] = "bool"
-                case _:
-                    logger.error("Go Language check_signature: Didn't match any argument type")
-                    raise ArgumentNotFoundException("Didn't match any argument type")
-            counter += 1
-
-        match return_type:
-            case "int":
-                new_return = "int64"
-            case "string":
-                new_return = "string"
-            case "float":
-                new_return = "float64"
-            case "bool":
-                new_return = "bool"
-            case _:
-                logger.error("Go Language check_signature: Didn't match any argument type")
-                raise ArgumentNotFoundException("Didn't match any argument type")
-
-        new_signature = {
-            "name": name,
-            "return": new_return,
-            "args": new_args
-        }
-        return new_signature

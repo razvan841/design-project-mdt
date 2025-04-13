@@ -20,7 +20,7 @@ import re
 from sources.CustomException import *
 from sources.LoggerConfig import logger
 
-default_parameters = {
+DEFAULT_PARAMETERS = {
     "int":{
         "min": -200,
         "max": 200
@@ -43,7 +43,7 @@ class TestCasesGenerator:
     def __init__(self):
         pass
 
-    def generate_test_cases(self, args: list, test_count: int = 25, test_parameters : dict = default_parameters) -> list:
+    def generate_test_cases(self, args: list, test_count: int = 25, test_parameters : dict = DEFAULT_PARAMETERS) -> list:
         '''
         Main function for generating test cases. Makes use of the functions below to generate the data
         '''
@@ -86,7 +86,7 @@ class TestCasesGenerator:
     def random_bool(self) -> bool:
         return random.choice([True, False])
 
-    def random_value(self, arg: str, parameters: dict = default_parameters):
+    def random_value(self, arg: str, parameters: dict = DEFAULT_PARAMETERS):
         int = parameters.get("int", {})
         int_min = int.get("min", -200)
         int_max = int.get("max", 200)
@@ -117,7 +117,7 @@ class TestCasesGenerator:
                 logger.error(arg)
                 raise TypeNotFoundException("error: Type not found!")
 
-    def parse_type(self, type_str: str):
+    def parse_type(self, type_str: str) -> list:
         '''
         Helper function to parse a list type in a format easier for generating lists and nested lists
         '''
@@ -125,23 +125,21 @@ class TestCasesGenerator:
         open_brackets_count = type_str.count('[')
 
         type_in_brackets = re.search(r'\[(.*?)\]', type_str).group(1)
-
         result = type_in_brackets.replace('[', '').replace(']', '')
         for _ in range(open_brackets_count):
             result = ['list', result]
-
         return result
 
-    def generate_random_list(self, type_structure, parameters: dict = default_parameters) -> list:
+    def generate_random_list(self, type_structure, parameters: dict = DEFAULT_PARAMETERS) -> list:
         '''
         Recursive function for generating lists and nested lists. It needs a format provided by the parse_type function
         '''
         if not isinstance(type_structure, list) or type_structure[0] not in ["list"]:
             raise ValueError("Invalid structure format.")
 
-        list = parameters.get("list", {})
-        list_min = list.get("min", 2)
-        list_max = list.get("max", 5)
+        list_parameter = parameters.get("list", {})
+        list_min = list_parameter.get("min", 2)
+        list_max = list_parameter.get("max", 5)
         if list_min >= list_max:
             logger.error("minimal value is larger than maximal value!")
             raise ValueError("minimal value is larger than maximal value!")

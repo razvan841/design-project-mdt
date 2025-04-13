@@ -29,7 +29,7 @@ from sources.LoggerConfig import logger
 class CSLanguage(Language):
     class CSInjector(Injector):
         '''
-        Injector implementation for the C++ programming language
+        Injector implementation for the CS programming language
         '''
         def __init__(self):
             super().__init__()
@@ -42,19 +42,17 @@ class CSLanguage(Language):
             self.CAST_DOUBLE = "double.Parse(\var)"
             self.CAST_STRING = "\var"
             self.CAST_CHAR = "char.Parse(\var)"
+            self.CAST_LIST= "JsonSerializer.Deserialize<"
             self.ESCAPE_VAR = "\var"
             self.ARGS = "args[\index]"
 
         def inject(self, source_path: str, destination_path: str, signature: dict):
-            '''
-            Inject a main function into a source code file
-            '''
             try:
                 with open(source_path, "r") as input:
                     code = input.read().replace("using System;", "")
                     requirements, code = self.get_requirements(code)
             except Exception as e:
-                logger.error(f'Cpp Language inject: Failed to open source code file {source_path} with error: {e}')
+                logger.error(f'CS Language inject: Failed to open source code file {source_path} with error: {e}')
                 raise InjectException(f'Failed to open source code file {source_path} with error: {e}')
             code = self.init(requirements) + code
             code += self.NEWLINE + self.NEWLINE
@@ -67,7 +65,7 @@ class CSLanguage(Language):
                 with open(destination_path, "w") as output:
                     output.write(code)
             except Exception as e:
-                logger.error(f'Cpp Language inject: Failed to write to destination {destination_path} with error: {e}')
+                logger.error(f'CS Language inject: Failed to write to destination {destination_path} with error: {e}')
                 raise InjectException(f'Failed to write to destination {destination_path} with error: {e}')
 
         def declare_item(self, name, type):
@@ -94,10 +92,8 @@ class CSLanguage(Language):
 
             return usings, "\n".join(code_from_static)
 
-
-
         def init(self, requirements : str) -> str:
-            system = "using System;\n"
+            system = "using System;\nusing System.Text.Json;\nusing System.Collections.Generic;\n"
             libraries = self.add_requirements(requirements)
             class_init = "class Program\n{\n\t"
             return system + libraries + class_init
@@ -122,6 +118,8 @@ class CSLanguage(Language):
                     return self.CAST_STRING.replace(self.ESCAPE_VAR,arg)
                 case "char":
                     return self.CAST_CHAR.replace(self.ESCAPE_VAR,arg)
+                case s if s.startswith("List"):
+                    return self.CAST_LIST + type + f">({arg})"
                 case _:
                     return super().cast(arg, type)
 
@@ -129,20 +127,15 @@ class CSLanguage(Language):
             return "}\n}"
 
         def initialize_item(self, name: str, type: str, arg_index: int):
-            '''
-            Initialize an individual variable from its respective program argument
-            '''
             return self.INDENT + type + self.SEP + name + self.SEP + self.ASSIGN + self.SEP + self.cast(self.get_arg(arg_index), type) + self.ENDLINE + self.NEWLINE
 
         def initialize(self, signature: dict) -> str:
-            '''
-            Initialize all variables necessary to call the function
-            '''
             initializations = ""
             args = signature["args"]
             for index, (arg, type) in enumerate(args.items()):
                 initializations += self.initialize_item(arg, type, index + self.ARG_OFFSET)
             return initializations
+
     class CSDockerMaker(DockerMaker):
         def __init__(self):
             super().__init__()
@@ -171,7 +164,7 @@ class CSLanguage(Language):
                     if not os.path.exists(session_path):
                         os.makedirs(session_path)
                 except OSError:
-                    logger.error("Cpp Language generate_dockerfile: Failed to create mounting folder")
+                    logger.error("CS Language generate_dockerfile: Failed to create mounting folder")
                     raise OSError("Failed to create mounting folder")
 
                 dockerfile_path = os.path.join(session_path, "Dockerfile")
@@ -179,10 +172,10 @@ class CSLanguage(Language):
                     with open(dockerfile_path, "w", encoding="utf-8") as file:
                         file.write(content)
                 except OSError:
-                    logger.error("Cpp Language generate_dockerfile: Failed to write Dockerfile")
+                    logger.error("CS Language generate_dockerfile: Failed to write Dockerfile")
                     raise OSError("Failed to write Dockerfile")
             except Exception as e:
-                logger.error(f"Cpp Language generate_dockerfile: {str(e)}")
+                logger.error(f"CS Language generate_dockerfile: {str(e)}")
                 raise RuntimeError(e)
 
             return True
@@ -217,7 +210,6 @@ class CSLanguage(Language):
         def appWorkdir(self) -> str:
             return 'WORKDIR /app/MyApp\n\n'
 
-    #TODO:
     def __init__(self):
         super().__init__()
         self.injector = CSLanguage.CSInjector()
@@ -240,6 +232,12 @@ class CSLanguage(Language):
     def generate_run_command(self, function_name: str, input: list) -> list :
         command = ["dotnet", "run", "myapp"]
         return command + input
-
+    #FIXME: List handling
     def parse_type(self, type_str: str):
-        pass
+        type_str = type_str.replace(" ", "")
+
+        open_brackets = type_str.count("[")
+        type_str = type_str.replace("list[", "List<").replace("[", "List<")
+        type_str = type_str.replace("]", "")
+        type_str += ">" * open_brackets
+        return type_str

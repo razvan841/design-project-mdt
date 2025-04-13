@@ -27,7 +27,7 @@ from sources.Podman import Podman, podman
 from sources.ResultParser import ResultParser
 from sources.LoggerConfig import logger, exec_logger, clear_exec_log_file
 from sources.LanguageFactory import LanguageFactory, SUPPORTED_LANGUAGES
-from sources.TestCasesGenerator import TestCasesGenerator
+from sources.TestCasesGenerator import TestCasesGenerator, DEFAULT_PARAMETERS
 from sources.CellSim import CellSim
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -65,7 +65,7 @@ class FlaskServer:
                 generate_test_cases = data.get("message", {}).get("generate_test_cases", False)
                 test_count = data.get("message", {}).get("test_cases_count", 25)
                 test_signature = data.get("message", {}).get("test_cases_signature", [])
-                test_parameters = data.get("message", {}).get("test_cases_parameters", {})
+                test_parameters = data.get("message", {}).get("test_cases_parameters", DEFAULT_PARAMETERS)
                 timeout = data.get("message", {}).get("timeout", 60)
                 exec_logger.info(f"Code cells: {len(options)}")
 
@@ -243,7 +243,7 @@ class FlaskServer:
 
     def run(self, host='localhost', port=5000, debug=True):
         logger.info("Server run: Starting the server...")
-        self.remove_cache()
+        # self.remove_cache()
         self.ready = True
         self.app.run(host=host, port=port, debug=debug)
 

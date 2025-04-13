@@ -156,6 +156,7 @@ class JavaLanguage(Language):
         self.extension = "java"
         self.type_dict = {
                 "int": "int",
+                "long": "long",
                 "string": "String",
                 "float": "float",
                 "double": "double",

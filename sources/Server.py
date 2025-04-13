@@ -243,7 +243,7 @@ class FlaskServer:
 
     def run(self, host='localhost', port=5000, debug=True):
         logger.info("Server run: Starting the server...")
-        # self.remove_cache()
+        self.remove_cache()
         self.ready = True
         self.app.run(host=host, port=port, debug=debug)
 

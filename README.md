@@ -267,4 +267,8 @@ In the repository you will find a branch called "experimental_features", which i
 - implementation of the Go Language
 - implementation of the C# Language
 
+Lists have not been implemented in Go unfortunately
+
+C# does have Lists implemented. For the language to work, the user is expected to only write the static method(not named `main`) and not create their own class. The user still has to include the libraries for their code. An example can be found in `\tests\C#\test_code.cs`
+
 **WARNING!** This features might not be completely implemented or might cause bugs

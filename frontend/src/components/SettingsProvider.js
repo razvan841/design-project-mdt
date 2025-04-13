@@ -92,9 +92,19 @@ const SettingsProvider = ({ children }) => {
             // default version php:8.3
             "compilers": [],
             "versions": ["php:8.3", "php:7.4", "php:5.6"]
+        },
+        "go": {
+            // default version 1.21
+            "compilers": ["gc"],
+            "versions": ["1.24", "1.22", "1.21", "1.19", "1.17"]
+        },
+        "c#": {
+            // default version 8.0
+            "compilers": ["dotnet"],
+            "versions": ["8.0", "7.0"]
         }
     };
-    
+
 
 
     const [configOptions, setConfigOptions] = useState(JSON.parse(sessionStorage.getItem("configOptions")) || defaultJSON)

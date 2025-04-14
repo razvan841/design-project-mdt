@@ -24,6 +24,8 @@
 - [Changing how the output is parsed](#changing-how-the-output-is-parsed)
 - [Testing the backend via an API testing tool](#testing-the-backend-via-an-api-testing-tool)
 - [Experimental feature branch](#experimental-feature-branch)
+  - [Backend improvements](#backend-improvements)
+  - [Frontend improvements](#frontend-improvements)
 
 # License
 
@@ -260,15 +262,25 @@ For backend development, we have a couple of API request examples in the example
 
 # Experimental feature branch
 
+## Backend improvements
+
 In the repository you will find a branch called "experimental_features", which includes backend implementations for the following features:
 
 - fixes timeout bug (the system didn't correctly kill the execution process, so the container will remain in execution after the timeout)
+- fixed bug in result comparison: if the result is any type of list, the system would consider any differences in the list formatting as differences, resulting in failed test cases.
+
+  Example: `["a", "b", "c"]` != `["a","b","c"]` before the fix
 - support for configuring intervals in the TestCasesGenerator (the execute_code api route now can include a dict with intervals from which the random values are taken)
+- support for configuring result comparison: the user can choose for floats or double a specified margin of error (epsilon), thus minor discrepancies can be ignored
 - implementation of the Go Language
 - implementation of the C# Language
 
 Lists have not been implemented in Go unfortunately
 
 C# does have Lists implemented. For the language to work, the user is expected to only write the static method(not named `main`) and not create their own class. The user still has to include the libraries for their code. An example can be found in `\tests\C#\test_code.cs`
+
+## Frontend improvements
+
+TBD
 
 **WARNING!** This features might not be completely implemented or might cause bugs

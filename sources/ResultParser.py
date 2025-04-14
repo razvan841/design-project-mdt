@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with the source code. If not, see <https://www.gnu.org/licenses/>.
 """
-import os,sys
+import os,sys,ast
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.abspath(os.path.join(current_dir, ".."))
 sys.path.append(parent_dir)
@@ -180,7 +180,7 @@ class ResultParser:
                     }
         return test_cases
 
-    def get_differential(self, input: list) -> dict:
+    def get_differential(self, input: list, return_type: str, float_epsilon: float) -> dict:
         '''
         Checks if all code cells return the same output for each input
         If not, creates a dict, highlighting the different outputs between code cells
@@ -193,10 +193,23 @@ class ResultParser:
         for test_id, test in test_cases.items():
             cells = test['cells']
             cells_outputs = set(cell["value"] for cell in cells.values())
-
             if len(cells_outputs) == 1:
                 matched += 1
             else:
+                if "double" in return_type or "float" in return_type:
+                    if self.check_float(cells_outputs, float_epsilon):
+                        matched += 1
+                        continue
+                    else:
+                        failed_tests.append(test)
+                        continue
+                if "list" in return_type:
+                    if self.check_list(cells_outputs):
+                        matched += 1
+                        continue
+                    else:
+                        failed_tests.append(test)
+                        continue
                 failed_tests.append(test)
         return {
             "test_count": str(test_count),
@@ -205,7 +218,26 @@ class ResultParser:
             "failed": failed_tests
         }
 
-    def parse(self, input: list) -> dict:
+    def check_float(self, cells_outputs : list, epsilon : float = 0.0001) -> bool:
+        try:
+            float_values = [float(item) for item in cells_outputs]
+        except ValueError:
+            return False
+
+        reference = float_values[0]
+        return all(abs(val - reference) <= epsilon for val in float_values)
+
+    def check_list(self, cells_outputs : list) -> bool:
+        try:
+            # Transform back to lists to compare results
+            parsed_lists = [ast.literal_eval(item) for item in cells_outputs]
+        except (ValueError, SyntaxError):
+            return False
+
+        reference = parsed_lists[0]
+        return all(lst == reference for lst in parsed_lists)
+
+    def parse(self, input: list, return_type: str, float_epsilon: float = 0.0001) -> dict:
         '''
         Main result parsing function
         Retrieves information from the raw_output and it formats it nicely for the frontend
@@ -229,5 +261,5 @@ class ResultParser:
                 "average_time": average_time,
                 "total_run_time": total_run_time
             }
-        parsed["differential"] = self.get_differential(input)
+        parsed["differential"] = self.get_differential(input, return_type, float_epsilon)
         return parsed

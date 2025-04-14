@@ -67,6 +67,8 @@ class FlaskServer:
                 test_signature = data.get("message", {}).get("test_cases_signature", [])
                 test_parameters = data.get("message", {}).get("test_cases_parameters", DEFAULT_PARAMETERS)
                 timeout = data.get("message", {}).get("timeout", 60)
+                configurations = data.get("message", {}).get("configurations", {})
+                float_epsilon = configurations.get("float_epsilon", 0.0001)
                 exec_logger.info(f"Code cells: {len(options)}")
 
                 if not (input_data or (generate_test_cases and test_count > 0)):
@@ -95,14 +97,14 @@ class FlaskServer:
                 if not options:
                     logger.error("Server execute_code: error: Options list cannot be empty.")
                     return jsonify({"message": {"status": 400, "error_message": "Options list cannot be empty."}}), 400
-
+                return_type = options[0]['signature']['return']
                 raw_outputs = self.manager.execute_parallel(options, input_data, timeout)
                 # if manual testing, simulate provided outputs as cell output:
                 if not generate_test_cases:
                     output_cell = CellSim().simulate(name="expected_output", inputs=input_data, outputs=output_data)
                     raw_outputs.append(output_cell)
                 result_parser = ResultParser()
-                outputs = result_parser.parse(raw_outputs)
+                outputs = result_parser.parse(raw_outputs, return_type, float_epsilon)
                 clear_exec_log_file()
             except Exception as e:
                 logger.error(f"Server execute_code: {str(e)}")

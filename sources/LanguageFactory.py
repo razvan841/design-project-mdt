@@ -27,11 +27,13 @@ from sources.languages.PHPLanguage import PHPLanguage
 from sources.languages.JavaLanguage import JavaLanguage
 from sources.languages.GoLanguage import GoLanguage
 from sources.languages.CSLanguage import CSLanguage
+from sources.languages.RustLanguage import RustLanguage
+from sources.languages.TSLanguage import TSLanguage
 from sources.CustomException import LanguageNotFoundException
 from sources.LoggerConfig import logger
 
 
-SUPPORTED_LANGUAGES = ["python", "cpp", "javascript", "php", "java", "go", "c#"]
+SUPPORTED_LANGUAGES = ["python", "cpp", "javascript", "php", "java", "go", "c#", "rust", "typescript"]
 class LanguageFactory:
     def __init__(self):
         pass
@@ -55,6 +57,10 @@ class LanguageFactory:
                 return GoLanguage()
             case "c#" | "cs":
                 return CSLanguage()
+            case "rust":
+                return RustLanguage()
+            case "typescript" | "ts":
+                return TSLanguage()
             case _:
                 logger.error(f"Language Factory get_language: Language not found: {language}")
                 raise LanguageNotFoundException(f"Language not found: {language}")

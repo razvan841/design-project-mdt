@@ -23,12 +23,14 @@ from sources.languages.Language import Language
 from sources.Injector import Injector
 from sources.DockerMaker import DockerMaker
 from sources.LoggerConfig import logger
-from sources.CustomException import InjectException, ArgumentNotFoundException
+from sources.CustomException import InjectException
 
 class JavaLanguage(Language):
 
     class JavaInjector(Injector):
-
+        '''
+        Injector implementation for the Java language.
+        '''
         def __init__(self):
             super().__init__()
             self.PARSE = ".parse\type(\var)"
@@ -57,7 +59,7 @@ class JavaLanguage(Language):
                     class_name = type.lower().capitalize()
                     return class_name + self.PARSE.replace(self.ESCAPE_TYPE, class_name).replace(self.ESCAPE_VAR, arg)
 
-        def get_parser(self,type:str ) -> str:
+        def get_parser(self, type:str) -> str:
             list_start = "List<"
             list_end = ">"
             type = type.replace(list_start,"")
@@ -85,11 +87,11 @@ class JavaLanguage(Language):
                 raise InjectException(f'Failed to open source code file {source_path} with error: {e}')
             return imports
 
-        def setup(self, signature:str) -> str:
+        def setup(self, signature:dict) -> str:
             name = signature['name']
             return "\n@SuppressWarnings(\"unchecked\")\n" + " public class " + f"{name}_injected" + " {public static void main(String[] args) {\n"
 
-        def wrap(self, signature) -> str:
+        def wrap(self, signature:dict) -> str:
             return ""
 
 
@@ -98,7 +100,7 @@ class JavaLanguage(Language):
                     return self.INDENT + type.lower().capitalize() + self.SEP + name + self.ENDLINE + self.NEWLINE
             return super().declare_item(name, type)
 
-        def inject(self, source_path: str, destination_path: str, signature: dict):
+        def inject(self, source_path: str, destination_path: str, signature: dict) -> None:
             '''
             Inject a main function into a source code file
             '''
@@ -165,13 +167,13 @@ class JavaLanguage(Language):
             }
 
 
-    def generate_compile_command(self, function_name:str, compiler:str):
+    def generate_compile_command(self, function_name:str, compiler:str) -> list:
         return ["javac" , "parse.java" ,f"{function_name}.java"]
 
-    def generate_run_command(self, function_name:str, input:list) :
+    def generate_run_command(self, function_name:str, input:list) -> list:
         return ["java" , function_name] + input
 
-    def parse_type(self, type_str: str):
+    def parse_type(self, type_str: str) -> str:
         type_map = {
             "string": "String",
             "bool": "Boolean",

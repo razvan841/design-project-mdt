@@ -29,7 +29,7 @@ from sources.LoggerConfig import logger
 class CSLanguage(Language):
     class CSInjector(Injector):
         '''
-        Injector implementation for the CS programming language
+        Injector implementation for the C# programming language
         '''
         def __init__(self):
             super().__init__()
@@ -46,7 +46,7 @@ class CSLanguage(Language):
             self.ESCAPE_VAR = "\var"
             self.ARGS = "args[\index]"
 
-        def inject(self, source_path: str, destination_path: str, signature: dict):
+        def inject(self, source_path: str, destination_path: str, signature: dict) -> None:
             try:
                 with open(source_path, "r") as input:
                     code = input.read().replace("using System;", "")
@@ -68,13 +68,13 @@ class CSLanguage(Language):
                 logger.error(f'CS Language inject: Failed to write to destination {destination_path} with error: {e}')
                 raise InjectException(f'Failed to write to destination {destination_path} with error: {e}')
 
-        def declare_item(self, name, type):
+        def declare_item(self, name : str, type : str) ->str:
             return ""
 
         def add_main(self) -> str:
             return "static void Main(string[] args)\n\t{\n"
 
-        def get_requirements(self, code: str):
+        def get_requirements(self, code: str) -> tuple:
             lines = code.splitlines()
             usings = []
             code_from_static = []
@@ -126,7 +126,7 @@ class CSLanguage(Language):
         def wrap(self, signature: dict) -> str:
             return "}\n}"
 
-        def initialize_item(self, name: str, type: str, arg_index: int):
+        def initialize_item(self, name: str, type: str, arg_index: int) -> str:
             return self.INDENT + type + self.SEP + name + self.SEP + self.ASSIGN + self.SEP + self.cast(self.get_arg(arg_index), type) + self.ENDLINE + self.NEWLINE
 
         def initialize(self, signature: dict) -> str:
@@ -140,7 +140,7 @@ class CSLanguage(Language):
         def __init__(self):
             super().__init__()
 
-        def generate_dockerfile(self, version: str, compiler: str, function_name: str, specs: list, index: int) -> None:
+        def generate_dockerfile(self, version: str, compiler: str, function_name: str, specs: list, index: int) -> bool:
             '''
             This implementation for the dockerfile is very different because C# needs to set up a project, it is way harder to compile and run just a file
             Technically, you can compile and run just a file with dotnet-script, but the code is very different than normal C#, so i decided to do it like this
@@ -232,7 +232,7 @@ class CSLanguage(Language):
     def generate_run_command(self, function_name: str, input: list) -> list :
         command = ["dotnet", "run", "myapp"]
         return command + input
-    #FIXME: List handling
+
     def parse_type(self, type_str: str):
         type_str = type_str.replace(" ", "")
 

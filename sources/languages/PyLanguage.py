@@ -52,7 +52,7 @@ class PyLanguage(Language):
         def wrap(self, signature: dict) -> str:
             return "if __name__ == \"__main__\":\n\tmain()"
 
-        def cast(self, arg, type):
+        def cast(self, arg, type) -> str:
             match type:
                 case "list":
                     return self.LIST_CAST.replace(self.ESCAPE_VAR,arg)
@@ -64,13 +64,13 @@ class PyLanguage(Language):
         def __init__(self):
             super().__init__()
 
-        def add_base_image(self, version : str, compiler : str):
+        def add_base_image(self, version : str, compiler : str) -> str:
             if version == "":
                 logger.warning("Python add_base_image: Didn't match any version, using 3.10!")
                 return f"FROM python:3.10-alpine\n\n"
             return f"FROM python:{version}-alpine\n\n"
 
-        def add_libraries(self, version : str, compiler : str, specs : list):
+        def add_libraries(self, version : str, compiler : str, specs : list) -> str:
             if specs:
                 return "RUN pip install " + " ".join(specs) + "\n\n"
             return ""
@@ -99,5 +99,5 @@ class PyLanguage(Language):
     def generate_compile_command(self, function_name, compiler) -> list:
         return ["echo", "compiled"]
 
-    def parse_type(self, type_str: str):
+    def parse_type(self, type_str: str) -> str:
         return "list"

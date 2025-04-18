@@ -101,7 +101,7 @@ class Container:
             self.available = True
             raise RunCodeException(e)
 
-    def compile_code(self):
+    def compile_code(self) -> dict:
         '''
         Generates command to compile code inside of container.
         Used when injecting new code into container
@@ -181,7 +181,6 @@ class Container:
         '''
         Injects user code into a main function with necessary inputs used to run
         '''
-        language = self.metadata['language']
         code = self.metadata['code']
         signature = self.metadata.get("signature", {})
         function_name = signature.get('name', "")
@@ -274,7 +273,7 @@ class Container:
             signature = self.metadata.get('signature', {})
             new_signature = self.language.check_signature(signature)
             self.metadata['signature'] = new_signature
-        except ArgumentNotFoundException as e:
+        except ArgumentNotFoundException:
             raise ArgumentNotFoundException("argument type not found!")
 
 

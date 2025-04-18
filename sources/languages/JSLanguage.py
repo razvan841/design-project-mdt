@@ -28,7 +28,7 @@ from sources.CustomException import *
 class JSLanguage(Language):
     class JSInjector(Injector):
         '''
-        Injector implementation for the Python scripting language.
+        Injector implementation for the JavaScript scripting language.
         '''
         def __init__(self):
             super().__init__()
@@ -44,9 +44,6 @@ class JSLanguage(Language):
             self.CAST_STRING = "String(\var)"
 
         def declare(self, signature: dict) -> str:
-            '''
-            JavaScript does not need to declare variables
-            '''
             return ""
 
         def setup(self, signature: dict) -> str:
@@ -73,13 +70,13 @@ class JSLanguage(Language):
         def __init__(self):
             super().__init__()
 
-        def add_base_image(self, version: str, compiler : str):
+        def add_base_image(self, version: str, compiler : str) -> str:
             if version == "":
                 logger.warning("JS add_base_image: Didn't match any version, using node:19!")
                 return f"FROM node:19-alpine\n\n"
             return f"FROM {version}-alpine\n\n"
 
-        def add_libraries(self, version : str, compiler : str, specs : list):
+        def add_libraries(self, version : str, compiler : str, specs : list) -> str:
             if specs:
                 return "RUN npm install " + " ".join(specs) + "\n\n"
             return ""
@@ -108,5 +105,5 @@ class JSLanguage(Language):
     def generate_compile_command(self, function_name, compiler) -> list:
         return ["echo", "compiled"]
 
-    def parse_type(self, type_str: str):
+    def parse_type(self, type_str: str) -> str:
         return "list"

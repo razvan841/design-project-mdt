@@ -37,6 +37,7 @@ parent_dir = os.path.abspath(os.path.join(current_dir, ".."))
 
 class Podman:
     def __init__(self):
+        # Nothing required to be declared or initialized here
         pass
 
     def process_to_lines(self, process: subprocess.CompletedProcess, output_name: str) -> list:
@@ -133,7 +134,7 @@ class Podman:
         machine = self.completed_process_to_lines(machine)
         return machine['stdout'][0] != '[]'
 
-    def clean_path(self, session_path: str = "sessions/"):
+    def clean_path(self, session_path: str = "sessions/") -> None:
         '''
         Clean stray containers that may be present at program start
         '''
@@ -235,7 +236,7 @@ class Podman:
         self.check_for_errors(run, ImageRunException)
         return self.completed_process_to_lines(run)
 
-    def get_copy_command(self):
+    def get_copy_command(self) -> list:
         '''
         If backend is running on a windows machine, we need to first ssh into the podman machine in order to copy files into a container.
         '''
@@ -244,7 +245,7 @@ class Podman:
         else:
             return []
 
-    def copy_to_container(self, file_path: str, container_name: str, dest: str = "/usr/src/app"):
+    def copy_to_container(self, file_path: str, container_name: str, dest: str = "/usr/src/app") -> None:
         '''
         Copies a file to an already existing container. Important for reusing the container for another piece of code.
         '''
@@ -252,22 +253,15 @@ class Podman:
         path = self.relative_to_vm_path(file_path)
         command = self.get_copy_command()
         command.append(f"podman cp {path} {container_name}:{dest}")
-        # This literally failed for like 5 tries one time and then never again,
-        # So it is now in a try block.
-        # Seems to still work even if timeout expires?
-        # schrodinger's bug fr
-        # logger.critical(f"Before executing copy on container {container_name}")
         try:
             copy = subprocess.run(command, capture_output=True, shell=False, timeout=5)
-            # logger.critical(f"After executing copy on container {container_name}")
             logger.info(f'Podman copy_to_container: Copy file {file_path} to container {container_name}:{dest} with output:')
             self.print_process_output(copy)
             self.check_for_errors(copy, CopyException)
         except Exception as e:
             logger.info(f'Podman copy_to_container: Timed out container {container_name}: {str(e)}')
-            # logger.critical(f"After executing copy on container {container_name}")
             logger.info(f'Podman copy_to_container: Copy file {file_path} to container {container_name}:{dest} with output:')
-            
+
 
     def exec_command(self, container_name: str, command: list, metrics: bool = False, timeout: int = 120) -> dict:
         '''

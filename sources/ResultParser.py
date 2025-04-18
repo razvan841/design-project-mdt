@@ -24,6 +24,7 @@ from sources.LoggerConfig import logger
 
 class ResultParser:
     def __init__(self):
+        # Nothing required to be declared or initialized here
         pass
 
     def unpack(self, input: list) -> str:
@@ -129,11 +130,17 @@ class ResultParser:
         total_cpu = 0
         average_cpu = 0
         count = 0
-        for output in outputs:
-            if 'metrics' in output.keys():
-                metrics = output['metrics']
-                total_cpu += int(metrics['Percent of CPU this job got'].strip('%'))
-                count += 1
+        try:
+            for output in outputs:
+                if 'metrics' in output.keys():
+                    metrics = output['metrics']
+                    total_cpu += int(metrics['Percent of CPU this job got'].strip('%'))
+                    count += 1
+        except ValueError:
+            return "0 %"
+        except Exception:
+            return "0 %"
+
         if(count > 0):
             average_cpu = total_cpu / count
         return str(round(average_cpu, 2)) + " %"
@@ -218,7 +225,7 @@ class ResultParser:
             "failed": failed_tests
         }
 
-    def check_float(self, cells_outputs : list, epsilon : float = 0.0001) -> bool:
+    def check_float(self, cells_outputs : set, epsilon : float = 0.0001) -> bool:
         try:
             float_values = [float(item) for item in cells_outputs]
         except ValueError:
@@ -227,7 +234,7 @@ class ResultParser:
         reference = float_values[0]
         return all(abs(val - reference) <= epsilon for val in float_values)
 
-    def check_list(self, cells_outputs : list) -> bool:
+    def check_list(self, cells_outputs : set) -> bool:
         try:
             # Transform back to lists to compare results
             parsed_lists = [ast.literal_eval(item) for item in cells_outputs]

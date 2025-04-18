@@ -41,6 +41,7 @@ DEFAULT_PARAMETERS = {
 
 class TestCasesGenerator:
     def __init__(self):
+        # Nothing required to be declared or initialized here
         pass
 
     def generate_test_cases(self, args: list, test_count: int = 25, test_parameters : dict = DEFAULT_PARAMETERS) -> list:
@@ -52,7 +53,7 @@ class TestCasesGenerator:
         if not args:
             return []
 
-        for i in range(test_count):
+        for _ in range(test_count):
             test_case = []
             try:
                 for arg in args:
@@ -70,13 +71,13 @@ class TestCasesGenerator:
     '''
     Functions for generating random value from all supported types (in Python)
     '''
-    def random_int(self, start : int =-200, end : int = 200) -> int:
+    def random_int(self, start : int = -200, end : int = 200) -> int:
         return random.randint(start, end)
 
-    def random_float(self, start : float =-200.0, end : float =200.0) -> float:
+    def random_float(self, start : float = -200.0, end : float = 200.0) -> float:
         return round(random.uniform(start, end), 3)
 
-    def random_string(self, min_length : int =3, max_length : int = 15) -> str:
+    def random_string(self, min_length : int = 3, max_length : int = 15) -> str:
         length = random.randint(min_length, max_length)
         return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
 
@@ -87,19 +88,19 @@ class TestCasesGenerator:
         return random.choice([True, False])
 
     def random_value(self, arg: str, parameters: dict = DEFAULT_PARAMETERS):
-        int = parameters.get("int", {})
-        int_min = int.get("min", -200)
-        int_max = int.get("max", 200)
-        float = parameters.get("float", {})
-        float_min = float.get("min", -200.0)
-        float_max = float.get("max", 200.0)
-        string = parameters.get("string", {})
-        string_min = string.get("min", 3)
-        string_max = string.get("max", 15)
+        int_parameters= parameters.get("int", {})
+        int_min = int_parameters.get("min", -200)
+        int_max = int_parameters.get("max", 200)
+        float_parameters = parameters.get("float", {})
+        float_min = float_parameters.get("min", -200.0)
+        float_max = float_parameters.get("max", 200.0)
+        string_parameters = parameters.get("string", {})
+        string_min = string_parameters.get("min", 3)
+        string_max = string_parameters.get("max", 15)
 
         if int_min >= int_max or float_min >= float_max or string_min >= string_max:
-            logger.error("minimal value is larger than maximal value!")
-            raise ValueError("minimal value is larger than maximal value!")
+            logger.error("Minimal value is larger than maximal value!")
+            raise ValueError("Minimal value is larger than maximal value!")
 
         match arg:
             case "int":
@@ -130,7 +131,7 @@ class TestCasesGenerator:
             result = ['list', result]
         return result
 
-    def generate_random_list(self, type_structure, parameters: dict = DEFAULT_PARAMETERS) -> list:
+    def generate_random_list(self, type_structure : list, parameters: dict = DEFAULT_PARAMETERS) -> list:
         '''
         Recursive function for generating lists and nested lists. It needs a format provided by the parse_type function
         '''

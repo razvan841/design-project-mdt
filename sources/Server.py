@@ -59,6 +59,7 @@ class FlaskServer:
                 data = request.get_json()
                 if not data:
                     return jsonify({"message": {"status": 400, "error_message": "Invalid JSON input."}}), 400
+
                 options = data.get("message", {}).get("options", [])
                 input_data = data.get("message", {}).get("input", [])
                 output_data = data.get("message", {}).get("output", [])
@@ -89,7 +90,7 @@ class FlaskServer:
                     except Exception as e:
                         logger.error("Server execute_code: Test generation failed")
                         return jsonify({"message": {"status": 400, "error_message": "Failed to generate test cases: check types to be correct"}}), 400
-                exec_logger.info(f"Total test cases: {len(input_data)}")
+
                 if timeout < 5:
                     logger.error("Server execute_code: error: Timeout value needs to be at least 5 seconds")
                     return jsonify({"message": {"status": 400, "error_message": "Timeout value needs to be at least 5 seconds"}}), 400
@@ -97,15 +98,19 @@ class FlaskServer:
                 if not options:
                     logger.error("Server execute_code: error: Options list cannot be empty.")
                     return jsonify({"message": {"status": 400, "error_message": "Options list cannot be empty."}}), 400
+
                 return_type = options[0]['signature']['return']
                 raw_outputs = self.manager.execute_parallel(options, input_data, timeout)
+
                 # if manual testing, simulate provided outputs as cell output:
                 if not generate_test_cases:
                     output_cell = CellSim().simulate(name="expected_output", inputs=input_data, outputs=output_data)
                     raw_outputs.append(output_cell)
+
                 result_parser = ResultParser()
                 outputs = result_parser.parse(raw_outputs, return_type, float_epsilon)
                 clear_exec_log_file()
+
             except Exception as e:
                 logger.error(f"Server execute_code: {str(e)}")
                 clear_exec_log_file()
@@ -204,6 +209,7 @@ class FlaskServer:
             if not language_name:
                 logger.error("Server get_versions_compilers: error: Missing 'name' query parameter")
                 return jsonify({"error": "Missing 'name' query parameter"}), 400
+
             response = {}
 
             if language_name == "all":
@@ -211,11 +217,11 @@ class FlaskServer:
                     lang = self.language_factory.get_language(language)
                     versions = lang.get_available_versions()
                     compilers = lang.get_available_compilers()
-                    dict = {
+                    dict_versions_compilers = {
                         "versions": versions,
                         "compilers": compilers
                     }
-                    response[language] = dict
+                    response[language] = dict_versions_compilers
                 return response
 
             language = self.language_factory.get_language(language=language_name)
@@ -237,23 +243,23 @@ class FlaskServer:
                     'status': status
                 }
                 return jsonify(response), 200
-            except Exception as e:
+            except Exception:
                 response = {
                     'status': 0
                 }
                 return jsonify(response), 200
 
-    def run(self, host='localhost', port=5000, debug=True):
+    def run(self, host: str ='localhost', port: int =5000, debug: bool=True) -> None:
         logger.info("Server run: Starting the server...")
         self.remove_cache()
         self.ready = True
         self.app.run(host=host, port=port, debug=debug)
 
-    def remove_cache(self):
+    def remove_cache(self) -> None:
         shutil.rmtree(os.path.join(current_dir, "__pycache__"), ignore_errors=True)
         shutil.rmtree(os.path.join(current_dir, "languages", "__pycache__"), ignore_errors=True)
 
-    def make_sessions(self):
+    def make_sessions(self) -> None:
         folders = os.listdir(parent_dir)
         if "sessions" not in folders:
             logger.info("Server setup: sessions folder not found, creating...")

@@ -16,6 +16,7 @@ along with the source code. If not, see <https://www.gnu.org/licenses/>.
 """
 class CellSim():
     def __init__(self):
+        # Nothing required to be declared or initialized here
         pass
 
     def simulate(self, name: str, inputs: list, outputs: list) -> dict:

@@ -48,7 +48,7 @@ class Injector:
         self.OUTPUT_NAME = "result"
         self.ARG_OFFSET = 0
 
-    def inject(self, source_path: str, destination_path: str, signature: dict):
+    def inject(self, source_path: str, destination_path: str, signature: dict) -> None:
         '''
         Inject a main function into a source code file
         '''
@@ -109,7 +109,7 @@ class Injector:
         '''
         return self.ARGS.replace(self.ESCAPE_INDEX, str(index))
 
-    def initialize_item(self, name: str, type: str, arg_index: int):
+    def initialize_item(self, name: str, type: str, arg_index: int) -> str:
         '''
         Initialize an individual variable from its respective program argument
         '''

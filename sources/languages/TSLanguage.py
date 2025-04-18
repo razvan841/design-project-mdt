@@ -28,7 +28,7 @@ from sources.CustomException import *
 class TSLanguage(Language):
     class TSInjector(Injector):
         '''
-        Injector implementation for the Python scripting language.
+        Injector implementation for the TypeScript language.
         '''
         def __init__(self):
             super().__init__()
@@ -70,7 +70,7 @@ class TSLanguage(Language):
                 case _:
                     return super().cast(arg, type)
 
-        def initialize_item(self, name: str, type: str, arg_index: int):
+        def initialize_item(self, name: str, type: str, arg_index: int) -> str:
             '''
             Initialize an individual variable from its respective program argument
             '''
@@ -130,18 +130,18 @@ class TSLanguage(Language):
 
             return True
 
-        def add_base_image(self, version: str, compiler : str):
+        def add_base_image(self, version: str, compiler : str) -> str:
             if version == "":
                 logger.warning("JS add_base_image: Didn't match any version, using node:19!")
                 return "FROM node:19-alpine\n\n"
             return f"FROM {version}-alpine\n\n"
 
-        def add_libraries(self, version : str, compiler : str, specs : list):
+        def add_libraries(self, version : str, compiler : str, specs : list) -> str:
             if specs:
                 return "RUN npm install " + " ".join(specs) + "\n\n"
             return ""
 
-        def add_tsnode(self, version: str, compiler : str):
+        def add_tsnode(self, version: str, compiler : str) -> str:
             return "RUN npm install -g typescript ts-node\n\n"
 
     def __init__(self):
@@ -167,5 +167,5 @@ class TSLanguage(Language):
     def generate_compile_command(self, function_name, compiler) -> list:
         return ['tsc', f'{function_name}.ts']
 
-    def parse_type(self, type_str: str):
+    def parse_type(self, type_str: str) -> str:
         return "list"

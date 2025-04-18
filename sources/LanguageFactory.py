@@ -36,6 +36,7 @@ from sources.LoggerConfig import logger
 SUPPORTED_LANGUAGES = ["python", "cpp", "javascript", "php", "java", "go", "c#", "rust", "typescript"]
 class LanguageFactory:
     def __init__(self):
+        # Nothing required to be declared or initialized here
         pass
 
     def get_language(self, language: str) -> Language:

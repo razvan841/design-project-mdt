@@ -4,19 +4,19 @@ import os
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.abspath(os.path.join(current_dir, "..", ".."))
 sys.path.append(parent_dir)
-from sources.languages.GoLanguage import GoLanguage
+from sources.languages.RustLanguage import RustLanguage
 from sources.CustomException import *
 
-go = GoLanguage()
+rs = RustLanguage()
 
 signature = {
     "name": "sum",
-    "return": "bool",
+    "return": "i32",
     "args": {
-        "a": "bool",
-        "b": "bool"
+        "a": "i32",
+        "b": "i32"
     }
 }
 
 
-go.inject("test_code.go", "test_code_injected.go", signature)
+rs.inject("test_code.rs", "test_code_injected.rs", signature)

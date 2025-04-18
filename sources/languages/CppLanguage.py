@@ -38,7 +38,7 @@ class CppLanguage(Language):
             self.ARGS = "argv[\index]"
             self.ARG_OFFSET = 1
 
-        def inject(self, source_path: str, destination_path: str, signature: dict):
+        def inject(self, source_path: str, destination_path: str, signature: dict) -> None:
             '''
             Inject a main function into a source code file
             '''
@@ -63,13 +63,13 @@ class CppLanguage(Language):
                 logger.error(f'Cpp Language inject: Failed to write to destination {destination_path} with error: {e}')
                 raise InjectException(f'Failed to write to destination {destination_path} with error: {e}')
 
-        def include(self):
+        def include(self) -> str:
             '''
             Include necessary libraries for the cpp implementation to work
             '''
             return "#include <vector>\n#include <string>\n\n"
 
-        def declare(self, signature):
+        def declare(self, signature: dict) -> str:
             '''
             A string stream is additionally declared to help with type casting
             '''
@@ -104,7 +104,7 @@ class CppLanguage(Language):
         def __init__(self):
             super().__init__()
 
-        def generate_dockerfile(self, version: str, compiler: str, function_name: str, specs: list, index: int) -> None:
+        def generate_dockerfile(self, version: str, compiler: str, function_name: str, specs: list, index: int) -> bool:
             '''
             Overrides the generate_dockerfile because the dockerfile for cpp requires extra commands
             '''
@@ -116,7 +116,6 @@ class CppLanguage(Language):
                 content += self.copy_all()
                 content += self.add_time(version, compiler)
                 content += self.add_json()
-                # content += self.add_compile(version, compiler, function_name, specs)
                 content += self.add_sleep_command()
 
                 try:
@@ -143,12 +142,12 @@ class CppLanguage(Language):
         def add_base_image(self, version: str, compiler: str) -> str:
             match compiler:
                 case "gcc":
-                    return f"FROM gcc:latest\n\n"
+                    return "FROM gcc:latest\n\n"
                 case "clang":
-                    return f"FROM silkeh/clang:latest\n\n"
+                    return "FROM silkeh/clang:latest\n\n"
                 case _:
                     logger.warning("Cpp Language add_base_image: Didn't match any compiler, adding gcc:latest!")
-                    return f"FROM gcc:latest\n\n"
+                    return "FROM gcc:latest\n\n"
             return ""
 
         def add_libraries(self, version: str, compiler: str, specs: list) -> str:

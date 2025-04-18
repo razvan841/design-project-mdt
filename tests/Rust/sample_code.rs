@@ -1,7 +1,7 @@
 use std::env;
 
 fn sum(a: i32, b: i32) -> i32 {
-    a + b
+    a + b;
 }
 
 fn main() {
@@ -24,5 +24,5 @@ fn main() {
     };
 
     let result = sum(a, b);
-    println!(result);
+    println!("{}", result);
 }

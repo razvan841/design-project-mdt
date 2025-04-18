@@ -1,3 +1,3 @@
-fn sum(a: i32, b: i32) -> i32 {
+fn sum(a: i64, b: i64) -> i64 {
     a + b
 }

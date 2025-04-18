@@ -28,7 +28,7 @@ from sources.CustomException import *
 class PHPLanguage(Language):
     class PHPInjector(Injector):
         '''
-        Injector implementation for the Python scripting language.
+        Injector implementation for the PHP language.
         '''
         def __init__(self):
             super().__init__()
@@ -68,7 +68,7 @@ class PHPLanguage(Language):
                 case _:
                     return super().cast(arg, type)
 
-        def inject(self, source_path: str, destination_path: str, signature: dict):
+        def inject(self, source_path: str, destination_path: str, signature: dict) -> None:
             code = "<?php\n"
             try:
                 with open(source_path, "r") as input:
@@ -93,7 +93,7 @@ class PHPLanguage(Language):
         def wrap(self, signature: dict) -> str:
             return "\n?>"
 
-        def initialize_item(self, name: str, type: str, arg_index: int):
+        def initialize_item(self, name: str, type: str, arg_index: int) -> str:
             logger.warning(type)
             if type == "list":
                 fix = f"$g{arg_index} = str_replace(\"'\", '\"', $argv[{arg_index}]);\n"
@@ -116,13 +116,13 @@ class PHPLanguage(Language):
         def __init__(self):
             super().__init__()
 
-        def add_base_image(self, version : str, compiler : str):
+        def add_base_image(self, version : str, compiler : str) -> str:
             if version == "":
                 logger.warning("PHP add_base_image: Didn't match any version, using php:8.3!")
                 return f"FROM php:8.3-alpine\n\n"
             return f"FROM {version}-cli-alpine\n\n"
 
-        def add_libraries(self, version : str, compiler : str, specs : list):
+        def add_libraries(self, version : str, compiler : str, specs : list) -> str:
             if specs:
                 return "RUN composer require " + " ".join(specs) + "\n\n"
             return ""
@@ -151,5 +151,5 @@ class PHPLanguage(Language):
     def generate_compile_command(self, function_name, compiler) -> list:
         return ["echo", "compiled"]
 
-    def parse_type(self, type_str: str):
+    def parse_type(self, type_str: str) -> str:
         return "list"

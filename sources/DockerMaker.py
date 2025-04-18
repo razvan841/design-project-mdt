@@ -28,9 +28,9 @@ class DockerMaker:
     def __init__(self):
         self.WORKDIR = "WORKDIR /usr/src/app\n\n"
         self.COPY_ALL = "COPY . /usr/src/app\n\n"
-        self.SLEEP_COMMAND = 'CMD ["sleep", "365000d"]\n'
+        self.SLEEP_COMMAND = 'CMD ["sleep", "600"]\n'
 
-    def generate_dockerfile(self, version: str, compiler: str, function_name: str, specs: list, index: int) -> None:
+    def generate_dockerfile(self, version: str, compiler: str, function_name: str, specs: list, index: int) -> bool:
         '''
         function that generates the dockerfile, based on the requirements of the code cell
         this class is overridden in every specific language class
@@ -42,7 +42,6 @@ class DockerMaker:
             content += self.add_workdir()
             content += self.copy_all()
             content += self.add_time(version, compiler)
-            # content += self.add_compile(version, compiler, function_name, specs)
             content += self.add_sleep_command()
 
             try:

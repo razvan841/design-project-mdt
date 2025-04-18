@@ -97,8 +97,8 @@ class ContainerManager:
         outputs = []
         i = 0
         try:
-            # C# can't make use of container recycling
-            if index != -1 and language != "cs" and language != "c#":
+            # C# and Rust can't make use of container recycling
+            if index != -1 and language != "cs" and language != "c#" and language != "rust":
                 container, _, __ = self.containers[index]
                 container.set_metadata(data)
                 container.set_run_as_is(run_as_is)
@@ -218,11 +218,11 @@ class ContainerManager:
         '''
         Helper function to find the oldest available container and remove it so there is enough space for a new container
         '''
-        max = time.time()
+        max_time = time.time()
         index_to_remove = -1
         for index, (container, _, timestamp) in self.containers.items():
-            if timestamp < max and self.check_container_available(index):
-                max = timestamp
+            if timestamp < max_time and self.check_container_available(index):
+                max_time = timestamp
                 index_to_remove = index
 
         if(index_to_remove == -1):

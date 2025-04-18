@@ -18,7 +18,7 @@ class GoLanguage(Language):
     '''
     class GoInjector(Injector):
         '''
-        Injector implementation for the C++ programming language
+        Injector implementation for the Go programming language
         '''
         def __init__(self):
             super().__init__()
@@ -32,7 +32,7 @@ class GoLanguage(Language):
             self.CAST_FLOAT = "strconv.ParseFloat(\var, 64)"
             self.CAST_STRING = "\var"
 
-        def inject(self, source_path: str, destination_path: str, signature: dict):
+        def inject(self, source_path: str, destination_path: str, signature: dict) -> None:
             '''
             Inject a main function into a source code file
             '''
@@ -68,7 +68,6 @@ class GoLanguage(Language):
             else:
                 necessary_imports = {"fmt", "os", "strconv"}
 
-            user_imports = set()
             code_lines = []
 
             # Traverse through the lines and separate the import block and other code
@@ -103,19 +102,14 @@ class GoLanguage(Language):
             # Combine necessary imports and user imports, ensuring no duplicates
             combined_imports = necessary_imports.union(user_imports)
 
-            # Rebuild the code
             new_code = []
-
-            # Add package main line
             new_code.append("package main")
 
             # Add import block with necessary and user libraries
             new_code.append("import (")
-            for imp in sorted(combined_imports):  # Sorting imports (optional)
+            for imp in sorted(combined_imports):
                 new_code.append(f'\t"{imp}"')
             new_code.append(")")
-
-            # Add the remaining code lines
             new_code.extend(code_lines)
 
             return '\n'.join(new_code)
@@ -127,7 +121,7 @@ class GoLanguage(Language):
             setup_string = "func main() {\n"
             return setup_string
 
-        def cast(self, arg, type):
+        def cast(self, arg: str, type: str) -> str:
             match type:
                 case "bool":
                     return self.CAST_BOOL.replace(self.ESCAPE_VAR,arg)
@@ -143,14 +137,14 @@ class GoLanguage(Language):
         def wrap(self, signature: dict) -> str:
             return "\n}"
 
-        def initialize_item(self, name: str, type: str, arg_index: int):
+        def initialize_item(self, name: str, type: str, arg_index: int) -> str:
             '''
             Initialize an individual variable from its respective program argument
             '''
             if type != "string":
                 assign = self.INDENT + name + self.COMMA + self.SEP + f"err{name}" + self.SEP + self.ASSIGN + self.SEP + self.cast(self.get_arg(arg_index), type) + self.ENDLINE + self.NEWLINE
             else:
-                 assign = self.INDENT + name + self.SEP + self.ASSIGN + self.SEP + self.cast(self.get_arg(arg_index), type) + self.ENDLINE + self.NEWLINE
+                assign = self.INDENT + name + self.SEP + self.ASSIGN + self.SEP + self.cast(self.get_arg(arg_index), type) + self.ENDLINE + self.NEWLINE
 
             handle_error = ""
             if type == "float64" or type == "int" or type == "bool":
@@ -197,7 +191,7 @@ class GoLanguage(Language):
         def __init__(self):
             super().__init__()
 
-        def generate_dockerfile(self, version: str, compiler: str, function_name: str, specs: dict, index: int) -> None:
+        def generate_dockerfile(self, version: str, compiler: str, function_name: str, specs: dict, index: int) -> bool:
             try:
                 content = ""
                 content += self.add_base_image(version, compiler)

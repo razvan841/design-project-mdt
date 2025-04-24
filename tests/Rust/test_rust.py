@@ -11,10 +11,10 @@ rs = RustLanguage()
 
 signature = {
     "name": "sum",
-    "return": "i32",
+    "return": "Vec<i32>",
     "args": {
-        "a": "i32",
-        "b": "i32"
+        "a": "Vec<String>",
+        "b": "Vec<bool>"
     }
 }
 

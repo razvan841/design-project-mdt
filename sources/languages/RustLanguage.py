@@ -31,16 +31,15 @@ class RustLanguage(Language):
         '''
         Injector implementation for the Rust programming language
         '''
-        # TODO: Add list dependency
         def __init__(self):
             super().__init__()
-            # self.helper_files = ["../resources/Cargo.toml"]
             self.ARG_OFFSET = 1
             self.PRINT_RAW = 'println!("{}", \var)'
             self.SIMPLE_CAST = '.parse().expect("Expected a different type!")'
             self.CAST_STRING = ".clone()"
-            self.CAST_CHAR = '.chars().next().expect("Expected a char");'
+            self.CAST_CHAR = '.chars().next().expect("Expected a char")'
             self.ARGS = "args[\index]"
+            self.CAST_LIST = 'serde_json::from_str(&args[\index]).expect("Expected a different type!")'
 
         def inject(self, source_path: str, destination_path: str, signature: dict) -> None:
             '''
@@ -68,7 +67,7 @@ class RustLanguage(Language):
                 raise InjectException(f'Failed to write to destination {destination_path} with error: {e}')
 
         def include(self) -> str:
-            return "use std::env;\n\n"
+            return "#![allow(warnings)]\nuse std::env;\n\nuse serde_json::Value;\n"
 
         def declare_item(self, name: str, type: str) -> str:
             return ""
@@ -77,6 +76,8 @@ class RustLanguage(Language):
             return "fn main() {\n\tlet args: Vec<String> = env::args().collect();\n\n"
 
         def initialize_item(self, name: str, type: str, arg_index: int) -> str:
+            if type.startswith("Vec"):
+                return self.INDENT + "let " + name + ": " + type  + self.SEP + self.ASSIGN + self.SEP + self.cast(str(arg_index), type) + self.ENDLINE + self.NEWLINE
             return self.INDENT + "let " + name + ": " + type  + self.SEP + self.ASSIGN + self.SEP + f"args[{arg_index}]"  + self.cast(self.get_arg(arg_index), type) + self.ENDLINE + self.NEWLINE
 
         def cast(self, arg : str, type : str) -> str:
@@ -87,6 +88,8 @@ class RustLanguage(Language):
                     return self.CAST_STRING.replace(self.ESCAPE_VAR,arg)
                 case "char":
                     return self.CAST_CHAR.replace(self.ESCAPE_VAR,arg)
+                case s if s.startswith("Vec"):
+                    return self.CAST_LIST.replace(self.ESCAPE_INDEX,arg)
                 case _:
                     return super().cast(arg, type)
 
@@ -107,7 +110,7 @@ class RustLanguage(Language):
     class RustDockerMaker(DockerMaker):
         def __init__(self):
             super().__init__()
-
+        # Rust can't make use of container, so it is ok to compile from the dockerfile
         def generate_dockerfile(self, version: str, compiler: str, function_name: str, specs: list, index: int) -> bool:
             '''
             Overrides the generate_dockerfile because the dockerfile for Rust requires extra commands (creating a cargo project)
@@ -119,7 +122,9 @@ class RustLanguage(Language):
                 content += self.add_workdir()
                 content += self.copy_all()
                 content += self.create_cargo_project(function_name)
+                content += self.add_serde_json()
                 content += self.project_workdir()
+                content += self.compile()
                 content += self.add_sleep_command()
 
                 try:
@@ -148,9 +153,19 @@ class RustLanguage(Language):
                 return "FROM rust:1.84.0-alpine\n\n"
             return f"FROM {version}-alpine\n\n"
 
-        # TODO: Add libraries to cargo project
         def add_libraries(self, version: str, compiler: str, specs: list) -> str:
-            return ""
+            if not specs:
+                return ""
+            content = ""
+            for spec in specs:
+                content += f'RUN echo \'{spec}\' >> code/Cargo.toml\n'
+            return content + "\n"
+
+        def add_serde_json(self) -> str:
+            return 'RUN echo \'serde_json = "1.0"\' >> code/Cargo.toml\n\n'
+
+        def compile(self) -> str:
+            return 'RUN cargo build\n\n'
 
         def create_cargo_project(self, function_name: str) -> str:
             return f"RUN cargo new code && mv {function_name}_injected.rs code/src/main.rs\n\n"
@@ -162,7 +177,6 @@ class RustLanguage(Language):
         super().__init__()
         self.injector = RustLanguage.RustInjector()
         self.docker_maker = RustLanguage.RustDockerMaker()
-        # self.helper_files = self.injector.helper_files
         self.available_versions = ["rust:1.84.0", "rust:1.82.0", "rust:1.76.0"]
         self.available_compilers = []
         self.extension = "rs"
@@ -176,12 +190,17 @@ class RustLanguage(Language):
             }
 
     def generate_compile_command(self, function_name: str, compiler_name: str) -> list:
-        return ["rustc", "main.rs"]
+        return ["echo", "compiled"]
 
     def generate_run_command(self, function_name: str, input: list) -> list :
-        command = ["./main"]
+        command = ["cargo", "run"]
         return command + input
 
-    # TODO: parse lists correctly
     def parse_type(self, type_str: str) -> str:
-        return ""
+        type_str = type_str.replace(" ", "")
+
+        open_brackets = type_str.count("[")
+        type_str = type_str.replace("list[", "Vec<").replace("[", "List<").replace("int", "i64").replace("float", "f64")
+        type_str = type_str.replace("]", "")
+        type_str += ">" * open_brackets
+        return type_str

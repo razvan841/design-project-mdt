@@ -29,11 +29,12 @@ from sources.languages.GoLanguage import GoLanguage
 from sources.languages.CSLanguage import CSLanguage
 from sources.languages.RustLanguage import RustLanguage
 from sources.languages.TSLanguage import TSLanguage
+from sources.languages.HaskellLanguage import HaskellLanguage
 from sources.CustomException import LanguageNotFoundException
 from sources.LoggerConfig import logger
 
 
-SUPPORTED_LANGUAGES = ["python", "cpp", "javascript", "php", "java", "go", "c#", "rust", "typescript"]
+SUPPORTED_LANGUAGES = ["python", "cpp", "javascript", "php", "java", "go", "c#", "rust", "typescript", "haskell"]
 class LanguageFactory:
     def __init__(self):
         # Nothing required to be declared or initialized here
@@ -62,6 +63,8 @@ class LanguageFactory:
                 return RustLanguage()
             case "typescript" | "ts":
                 return TSLanguage()
+            case "haskell":
+                return HaskellLanguage()
             case _:
                 logger.error(f"Language Factory get_language: Language not found: {language}")
                 raise LanguageNotFoundException(f"Language not found: {language}")
